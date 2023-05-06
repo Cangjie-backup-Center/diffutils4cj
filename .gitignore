@@ -1,3 +1,7 @@
 .git/
 .gitee/
 .vscode/
+/build/
+/ci_lib/
+/ci_test/
+/module-resolve.json
