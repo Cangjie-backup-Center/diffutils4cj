@@ -104,11 +104,16 @@ public class Chunk<T> where T <: Equal<T> & ToString {
             if (!obj.lines.isEmpty()) {
                 return false
             }
-        } else if (lines[1] == obj.lines[1]) {
-            for (i in lines) {
-                i
-            }
+        } else if ( obj.lines.size != lines.size) {
             return false
+        } else {
+            var i = obj.lines.size - 1
+            while( i>=0 ) {
+                if (!(lines[i] == obj.lines[i])) {
+                    return false
+                }
+                i--
+            }
         }
         if (position != obj.position) {
             return false

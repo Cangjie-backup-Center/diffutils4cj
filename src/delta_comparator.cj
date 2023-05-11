@@ -11,7 +11,7 @@ public class DeltaComparator<T> where T <: Equal<T> & ToString {
     private static let serialVersionUID: Int64 = 1
     public static let  INSTANCE = DeltaComparator<T>()
 
-    private init() {
+    public init() {
     }
 
     /**
