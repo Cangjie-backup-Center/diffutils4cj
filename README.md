@@ -1,77 +1,69 @@
 <div align="center">
-<h1>库名</h1>
+<h1>diffutils4cj</h1>
 </div>
 
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.38.2-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-50%25-red" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-92.1%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
 ## 介绍
 
-介绍库或者框架符合的标准，应用领域，解决什么问题。有哪些主要的特点，与同类库相比有哪些优点。
+该库可以逐行比对两个字符串的差异，并按行将差异展示出来，提供补丁打包和添加功能。文档和数据的对比需要先转换为字符串数组再使用该库进行逐行比对。
+
+参考地址： https://code.google.com/archive/p/java-diff-utils  版本1.3.0
 
 ### 特性
 
-- 🚀 特性1
-
-- 🚀 特性2
-
-- 💪 特性3
-
-- 🛠️ 特性4
-
-- 🌍 特性5
-
-- 💡  特性6
-
-### 路线
-
-<p align="center">
-<img src="./doc/assets/milestone.png" width="100%" >
-</p>
-路线图roadmap在 doc/framework-roadmap-logo.pptx 中有源文件。
+- 🚀 对比两组字符串之间的差异
 
 
 ## 软件架构
-
-### 架构图
-
-<p align="center">
-<img src="./doc/assets/framework.png" width="60%" >
-</p>
-
-架构图文字说明，包括模块说明、架构层次等详细说明。
 
 ### 源码目录
 
 ```shell
 .
-├── README.md
 ├── doc
-│   ├── assets
-│   ├── cjcov
-│   ├── design.md
-│   ├── proposal.md
-│   └── xxx_lib.md
 ├── src
-│   └── Template.cj
+│   ├── change_delta.cj
+│   ├── chunk.cj
+│   ├── delete_delta.cj
+│   ├── delta_comparator.cj
+│   ├── delta.cj
+│   ├── diff_algorithlm.cj
+│   ├── diff_exception.cj
+│   ├── diff_node.cj
+│   ├── differentiation_failedexception.cj
+│   ├── diffutils.cj
+│   ├── equalizer.cj
+│   ├── insert_delta.cj
+│   ├── myers_diff.cj
+│   ├── patch.cj
+│   ├── path_faulled_exception.cj
+│   └── path_node.cj
+│   └── snake.cj
 └── test
-    ├── HLT
-    ├── LLT
-    └── UT
+│   ├── HLT
+│   └── LLT
+├── CHANGELOG.md
+├── gitee_gate.cfg
+├── LICENSE.txt
+├── module.json
+├── README.md
+└── README.OpenSource
 ```
 
-- `doc`  文档目录，用于存放设计、API接口等文档
-- `src`  源码目录
-- `test` 测试目录
+- `doc`  文档目录，用于存API接口文档
+- `src`  是库源码目录
+- `test` 存放 HLT 测试用例、LLT 自测用例
 
 ### 接口说明
 
-主要类和函数接口说明详见 [API](./doc/api.md)
+主要类和函数接口说明详见 [API](./doc/feature_api.md)
 
 
 ## 使用说明
@@ -86,46 +78,44 @@ cpm build
 ```
 
 ### 功能示例
-#### xxx 功能示例
+#### 对比两组字符串之间的差异功能示例
 
 功能示例描述:
 
 示例代码如下：
 
 ```cangjie
-import xxx.*
-main() {
- xxxx
+from diffUtils4cj import diffUtils4cj.*
+from std import collection.*
+
+main(): Int64 {
+    var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+    if (patch.getDeltas().isEmpty()) {
+        return 1
+    }
+    if (1 != patch.getDeltas().size) {
+        return 1
+    }
+    var  delta = patch.getDeltas().get(0).getOrThrow()
+    if (!(delta is InsertDelta<String>)) {
+        return 1
+    }
+    if(!delta.getOriginal().getLines().isEmpty()) {
+        return 1
+    }
+    if(delta.getRevised().getLines().getRawArray() != ["jjj", "kkk"]) {
+        return 1
+    }
+    println("pass")
+    return 0
 }
 ```
 
 执行结果如下：
 
 ```shell
-xxx
+pass
 ```
-
-#### xxxx 功能示例
-
-功能示例描述:
-
-示例代码如下：
-
-```cangjie
-import xxx.*
-main() {
- xxxx
-}
-```
-
-执行结果如下：
-
-```shell
-xxx
-```
-
-## 开源协议
-xx License
 
 ## 参与贡献
 
