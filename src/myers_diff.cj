@@ -42,7 +42,9 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
      * @since 0.38.2
      */
     public func diff(original: Array<T>, revised: Array<T>): Patch<T> {
-        return diff(ArrayList<T>(original), ArrayList<T>(original))
+        var list1 = ArrayList<T>(original)
+        var list2 = ArrayList<T>(revised)
+        return diff(list1, list2)
     }
 
     /**
@@ -112,7 +114,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
 
                 var node: PathNode = DiffNode(i, j, prev)
 
-                while (i < N && j < M && (orig.get(i).getOrThrow() == (rev.get(j).getOrThrow()))) {
+                while (i < N && j < M && equals(orig.get(i).getOrThrow(), rev.get(j).getOrThrow())) {
                     i++
                     j++
                 }

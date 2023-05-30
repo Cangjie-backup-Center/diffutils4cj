@@ -94,7 +94,7 @@ public abstract class PathNode {
 
 func checkNull(v: Option<PathNode>): Bool {
     match(v) {
-        case Some(v) => return false
         case None => return true
+        case _ => return false
     }
 }
