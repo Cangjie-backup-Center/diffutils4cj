@@ -15,8 +15,6 @@
 
 约束：NA
 
-性能：支持版本几何性能持平
-
 可靠性：NA
 
 #### 1.1 对比两组字符串之间的差异
@@ -31,7 +29,7 @@ public class DiffUtils {
      * 对比两个ArrayList的差异
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
-     * 返回值 Patch<T - 返回差异对象
+     * 返回值 Patch<T> - 返回差异对象
      */
     public static func diff<T>( original: ArrayList<T>, revised: ArrayList<T>): Patch<T> where T <: Equal<T> & ToString
 
@@ -40,7 +38,7 @@ public class DiffUtils {
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
      * 参数 algorithm - 差异算法
-     * 返回值 Patch<T - 返回差异对象
+     * 返回值 Patch<T> - 返回差异对象
      */
     public static func diff<T>(original: ArrayList<T>, revised: ArrayList<T>,algorithm: DiffAlgorithm<T>): Patch<T> where T <: Equal<T> & ToString
     
@@ -49,7 +47,7 @@ public class DiffUtils {
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
      * 参数 equalizer - 排序算法
-     * 返回值 Patch<T - 返回差异对象
+     * 返回值 Patch<T> - 返回差异对象
      */
     public static func diff<T>(original: ArrayList<T>, revised: ArrayList<T>,equalizer: Equalizer<T>): Patch<T> where T <: Equal<T> & ToString
 }
@@ -110,9 +108,9 @@ public abstract class Delta<T> where T <: Equal<T> & ToString{
 public enum DeltaType {
     /** 差异类型为更新 */
     | CHANGE
-    /** 差异类型为更新删除 */
+    /** 差异类型为删除 */
     | DELETE
-    /** 差异类型为更新插入 */
+    /** 差异类型为插入 */
     | INSERT
 }
 
@@ -232,7 +230,7 @@ public interface DiffAlgorithm<T> where T <: Equal<T> & ToString{
      * 对比两个Array的差异
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
-     * 返回值 Patch<T - 返回差异对象
+     * 返回值 Patch<T> - 返回差异对象
      */
     func diff(original: Array<T>, revised: Array<T>): Patch<T>
     
@@ -240,7 +238,7 @@ public interface DiffAlgorithm<T> where T <: Equal<T> & ToString{
      * 对比两个ArrayList的差异
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
-     * 返回值 Patch<T - 返回差异对象
+     * 返回值 Patch<T>- 返回差异对象
      */
     func diff(original : ArrayList<T>, revised: ArrayList<T>): Patch<T>
 }
@@ -301,14 +299,14 @@ public abstract class PathNode {
     public init(i: Int64, j: Int64, prev: Option<PathNode>)
     
     /*
-     * 判断这个节点是否是一条蛇形路径节点
-     * 返回值 Bool - 是否是一条蛇形路径
+     * 判断该节点是否是 Snake 节点
+     * 返回值 Bool - 返回 true 是 Snake，false 不是 Snake
      */
     public func isSnake(): Bool
     
     /*
-     * 判断这个节点的i和j值是否小于0
-     * 返回值 Bool - 是否小于0
+     * 判断该节点是否是 Bootstrap
+     * 返回值 Bool - 返回 true 是 Bootstrap，false 不是 Bootstrap
      */
     public func isBootstrap(): Bool
     
@@ -335,8 +333,8 @@ public class DiffNode <: PathNode {
     public init(i: Int64, j: Int64, prev: Option<PathNode>)
     
     /*
-     * 判断这个节点是否是一条蛇形路径节点，该类始终返回 false
-     * 返回值 Bool - 是否是一条蛇形路径
+     * 判断该节点是否是 Snake 节点
+     * 返回值 Bool - 返回 true 是 Snake，false 不是 Snake
      */
     public func isSnake(): Bool
 }
@@ -351,8 +349,8 @@ public  class Snake <: PathNode {
     public init(i: Int64, j: Int64, prev: Option<PathNode>)
     
     /*
-     * 判断这个节点是否是一条蛇形路径节点,该类始终返回 true
-     * 返回值 Bool - 是否是一条蛇形路径
+     * 判断该节点是否是 Snake 节点
+     * 返回值 Bool - 返回 true 是 Snake，false 不是 Snake
      */
     public func isSnake(): Bool
 }
