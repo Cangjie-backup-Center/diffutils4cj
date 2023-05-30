@@ -23,7 +23,15 @@ public class DiffNode <: PathNode {
      * @since 0.38.2
      */
     public init(i: Int64, j: Int64, prev: Option<PathNode>) {
-        super(i, j, prev.getOrThrow().previousSnake())
+        super(i, j, initPrev(prev))
+    }
+
+    private func initPrev(prev: Option<PathNode>): Option<PathNode> {
+        if (checkNull(prev)) {
+            return prev
+        } else {
+            return prev.getOrThrow().previousSnake()
+        }
     }
     
     /**
