@@ -189,6 +189,9 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
     }
 
     private func copyOfRange(original: ArrayList<T>, fromIndex: Int64, to: Int64 ): ArrayList<T> {
+        if (fromIndex > original.size || to > original.size)  {
+            throw IndexOutOfBoundsException("copy list out of range")
+        }
         if (fromIndex == to) {
             return ArrayList<T>()
         }
