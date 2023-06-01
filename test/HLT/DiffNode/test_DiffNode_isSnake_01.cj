@@ -1,0 +1,20 @@
+// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+
+from std import unittest.*
+from std import unittest.testmacro.*
+from std import collection.*
+from diffUtils4cj import diffUtils4cj.*
+
+@Test
+public class TestDiffNodeB001{
+    /***
+        public init(i: Int64, j: Int64, prev: Option<PathNode>)
+        public func isSnake(): Bool
+        测试场景:非Snake节点
+    ***/
+    @TestCase
+    func testDiffNodeIsSnake01(): Unit {
+        var diffNode01=DiffNode(1,1,Option<PathNode>.None)
+        @Assert(diffNode01.isSnake(),false)
+    }
+}
