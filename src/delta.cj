@@ -75,6 +75,55 @@ public abstract class Delta<T> where T <: Equal<T> & ToString {
     public func setRevised(revised: Chunk<T>) {
         this.revised = revised
     }
+
+    /**
+     * Applies this delta as the patch for a given target
+     * 
+     * @param target the given target
+     *
+     * @since 0.39.3
+     */
+    public func applyTo(target: ArrayList<T>): Unit
+
+    /**
+     * Cancel this delta for a given revised text. The action is opposite to
+     * patch.
+     * 
+     * @param target the given revised text
+     *
+     * @since 0.39.3
+     */
+    public func restore(target: ArrayList<T>): Unit
+
+    /**
+     * Verifies that this delta can be used to patch the given text.
+     * 
+     * @param target the text to patch.
+     *
+     * @since 0.39.3
+     */
+    public func verify(target: ArrayList<T>): Unit
+
+    /**
+     * Returns is the Delta are same
+     *
+     * @return the Bool
+     *
+     * @since 0.39.3
+     */
+    public func equals(obj: Delta<T>): Bool {
+        if(refEq(this, obj)) {
+            return true
+        }
+        var other: Delta<T> = obj
+        if (!original.equals(other.original)) {
+            return false
+        }
+        if (!revised.equals(other.revised)) {
+            return false
+        }
+        return true
+    }
 }
 
 public enum DeltaType {

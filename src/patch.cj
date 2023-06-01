@@ -32,4 +32,41 @@ public class Patch<T> where T <: Equal<T> & ToString {
         deltas.sortBy(DeltaComparator<T>.INSTANCE.deltaComparator, stable: false)
         return deltas
     }
+
+    /**
+     * Applies this delta as the patch for a given target
+     * 
+     * @param target the given target
+     *
+     * @since 0.39.3
+     */
+    public func applyTo(target: ArrayList<T>): ArrayList<T> {
+        var result: ArrayList<T> =  ArrayList<T>(target)
+        var deltas = getDeltas()
+        var size = deltas.size
+        while (size > 0) {
+            deltas[size-1].applyTo(result)
+            size --
+        }
+        return result
+    }
+
+    /**
+     * Cancel this delta for a given revised text. The action is opposite to
+     * patch.
+     * 
+     * @param target the given revised text
+     *
+     * @since 0.39.3
+     */
+    public func restore(target: ArrayList<T>): ArrayList<T> {
+        var result: ArrayList<T> =  ArrayList<T>(target)
+        var deltas = getDeltas()
+        var size = deltas.size
+        while (size > 0) {
+            deltas[size-1].restore(result)
+            size --
+        }
+        return result
+    }
 }

@@ -50,6 +50,22 @@ public class DiffUtils {
      * 返回值 Patch<T> - 返回差异对象
      */
     public static func diff<T>(original: ArrayList<T>, revised: ArrayList<T>,equalizer: Equalizer<T>): Patch<T> where T <: Equal<T> & ToString
+
+    /*
+     * 用给定的补丁修补原始文本
+     * 参数 original - 原始文本
+     * 参数 patch - 差异补丁
+     * 返回值 ArrayList<T> - 修订后文本
+     */
+    public static func patch<T>(original: ArrayList<T>, patch: Patch<T>): ArrayList<T>
+
+    /*
+     * 用给定的补丁还原修订文本
+     * 参数 revised - 修订后文本
+     * 参数 patch - 差异补丁
+     * 返回值 ArrayList<T> - 原始文本
+     */
+    public static func unpatch<T>(revised: ArrayList<T>, patch: Patch<T>): ArrayList<T>
 }
 
 public class Patch<T> where T <: Equal<T> & ToString {
@@ -64,6 +80,20 @@ public class Patch<T> where T <: Equal<T> & ToString {
      * 返回值 ArrayList<Delta<T>> - 返回当前保存的差异列表
      */
 	public func getDeltas(): ArrayList<Delta<T>>
+
+    /*
+     * 把该 Patch 内的 Delta 差异应用到文本
+     * 参数 target - 要应用的文本
+     * 返回值 ArrayList<T> - 修订后的文本
+     */
+     public func applyTo(target: ArrayList<T>): ArrayList<T>
+
+    /*
+     * 使用 Patch 内的 Delta 差异还原到文本
+     * 参数 target - 要还原的文本
+     * 返回值 ArrayList<T> - 还原后的文本
+     */
+     public func restore(target: ArrayList<T>): ArrayList<T>
 }
 
 public abstract class Delta<T> where T <: Equal<T> & ToString{
@@ -99,10 +129,35 @@ public abstract class Delta<T> where T <: Equal<T> & ToString{
 	public func getRevised(): Chunk<T>
 	
 	/*
-     * 设置该差异修订文本受影响的部分
+     * 设置差异修订文本受影响的部分
      * 参数 original - 修订文本受影响的部分
      */
 	public func setRevised(revised: Chunk<T>)
+
+    /*
+     * 把当前 Delta 差异应用到文本
+     * 参数 target - 要应用的文本
+     */
+     public func applyTo(target: ArrayList<T>): Unit
+
+    /*
+     * 使用当前 Delta 差异还原到文本
+     * 参数 target - 要还原的文本
+     */
+     public func restore(target: ArrayList<T>): Unit
+
+    /*
+     * 验证差异相对目标列表是否合法
+     * 参数 target - 目标列表
+     */
+     public func verify(target: ArrayList<T>): Unit
+
+    	/*
+     * 判断两个 Delta 是否相同
+     * 参数 obj - 一个 Delta<T>
+     * 返回值 Bool - 是否相同
+     */
+     public func equals(obj: Delta<T>): Bool
 }
 
 public enum DeltaType {
@@ -127,6 +182,30 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString{
      * 返回值 DeltaType - 差异类型
      */
 	public func getType(): DeltaType
+
+    /*
+     * 把当前 Delta 差异应用到文本
+     * 参数 target - 要应用的文本
+     */
+     public func applyTo(target: ArrayList<T>): Unit
+
+    /*
+     * 使用当前 Delta 差异还原到文本
+     * 参数 target - 要还原的文本
+     */
+     public func restore(target: ArrayList<T>): Unit
+
+    /*
+     * 验证差异相对目标列表是否合法
+     * 参数 target - 目标列表
+     */
+     public func verify(target: ArrayList<T>): Unit
+
+    /*
+     * 转换成字符串
+     * 返回值 String - 返回字符串
+     */
+     public func toString(): String
 }
 
 public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
@@ -142,6 +221,30 @@ public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
      * 返回值 DeltaType - 差异类型
      */
 	public func getType(): DeltaType
+
+    /*
+     * 把当前 Delta 差异应用到文本
+     * 参数 target - 要应用的文本
+     */
+     public func applyTo(target: ArrayList<T>): Unit
+
+    /*
+     * 使用当前 Delta 差异还原到文本
+     * 参数 target - 要还原的文本
+     */
+     public func restore(target: ArrayList<T>): Unit
+
+    /*
+     * 验证差异相对目标列表是否合法
+     * 参数 target - 目标列表
+     */
+     public func verify(target: ArrayList<T>): Unit
+
+    /*
+     * 转换成字符串
+     * 返回值 String - 返回字符串
+     */
+     public func toString(): String
 }
 
 public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString {
@@ -157,6 +260,30 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString {
      * 返回值 DeltaType - 差异类型
      */
 	public func getType(): DeltaType
+
+    /*
+     * 把当前 Delta 差异应用到文本
+     * 参数 target - 要应用的文本
+     */
+     public func applyTo(target: ArrayList<T>): Unit
+
+    /*
+     * 使用当前 Delta 差异还原到文本
+     * 参数 target - 要还原的文本
+     */
+     public func restore(target: ArrayList<T>): Unit
+
+    /*
+     * 验证差异相对目标列表是否合法
+     * 参数 target - 目标列表
+     */
+     public func verify(target: ArrayList<T>): Unit
+
+    /*
+     * 转换成字符串
+     * 返回值 String - 返回字符串
+     */
+     public func toString(): String
 }
 
 public class Chunk<T> where T <: Equal<T> & ToString {
