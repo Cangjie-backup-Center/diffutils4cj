@@ -54,4 +54,32 @@ public class DiffUtils {
             equalizer: Equalizer<T>): Patch<T> where T <: Equal<T> & ToString{
         return DiffUtils.diff(original, revised,MyersDiff<T>(equalizer))
     }
+
+    /**
+     * Patch the original text with given patch
+     * 
+     * @param original the original text
+     * @param patch the given patch
+     * @return the revised text
+     *   
+     * @since 0.39.3
+     */
+    public static func patch<T>(original: ArrayList<T>, patch: Patch<T>): ArrayList<T> 
+            where T <: Equal<T> & ToString{
+        return patch.applyTo(original)
+    }
+
+    /**
+     * Unpatch the revised text for a given patch
+     * 
+     * @param revised the revised text
+     * @param patch the given patch
+     * @return the original text
+     *   
+     * @since 0.39.3
+     */
+    public static func unpatch<T>(revised: ArrayList<T>, patch: Patch<T>): ArrayList<T>
+            where T <: Equal<T> & ToString{
+        return patch.restore(revised)
+    }
 }
