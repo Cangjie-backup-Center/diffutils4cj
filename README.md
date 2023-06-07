@@ -6,7 +6,7 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.39.3-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-92.1%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-95.6%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -19,6 +19,7 @@
 ### 特性
 
 - 🚀 对比两组字符串之间的差异
+- 💪 提供添加和打包补丁的功能
 
 
 ## 软件架构
@@ -108,6 +109,33 @@ main(): Int64 {
     }
     println("pass")
     return 0
+}
+```
+
+执行结果如下：
+
+```shell
+pass
+```
+
+#### 提供添加和打包补丁的功能
+
+示例代码如下：
+
+```cangjie
+from diffUtils4cj import diffUtils4cj.*
+from std import collection.*
+
+main(): Int64 {
+    var rev = ArrayList<String>("hhh", "jjj", "kkk")
+    var orig= ArrayList<String>()
+    var patch:  Patch<String>= DiffUtils.diff(rev, orig)
+    var res = DiffUtils.patch(rev,patch)
+    if (res == orig) {
+    println("pass")
+        return 0
+    }
+    return 1
 }
 ```
 
