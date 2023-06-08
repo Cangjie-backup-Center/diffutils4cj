@@ -11,6 +11,7 @@ main(): Int64 {
     patchTest.deltaTest01()
     patchTest.deltaTest02()
     patchTest.deltaTest03()
+    patchTest.deltaTest04()
     return 0
 }
 
@@ -42,5 +43,16 @@ public class deltaTest {
         var delta = DeleteDelta<String>(original, revised)
         var str = delta.toString()
         @Assert(str,"[DeleteDelta, position: 12, lines: [test]]")
+    }
+
+    @TestCase
+    public func deltaTest04(): Unit {
+        var c1: Chunk<String> = Chunk<String>(12, ["test"])
+        var c2: Chunk<String> = Chunk<String>(55, ["test2"])
+        var delta = DeleteDelta<String>(c1, c2)
+        var c3: Chunk<String> = Chunk<String>(987, ["test"])
+        var delta2 = DeleteDelta<String>(c1, c3)
+        var str = delta.toString()
+        @Assert(false,delta.equals(delta2))
     }
 }
