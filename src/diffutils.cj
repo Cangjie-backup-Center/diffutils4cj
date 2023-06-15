@@ -106,34 +106,14 @@ public class DiffUtils {
         for (line in diff) {
             // Skip leading lines until after we've seen one starting with '+++'
             if (inPrelude) {
-                if (line.startsWith("+++")) {
-                    inPrelude = false
-                }
+                if (line.startsWith("+++")) { inPrelude = false }
                 continue
             }            
             var m = unifiedDiffChunkRe.matcher(line).find()
 
             if (let Some(v) = m) {
                 // Process the lines in the previous chunk
-                if (rawChunk.size != 0) {
-                    var oldChunkLines = ArrayList<String>()
-                    var newChunkLines = ArrayList<String>()
-
-                    for (raw_line in rawChunk) {
-                        tag = raw_line[0]
-                        rest = raw_line[1]
-                        if (tag.equals(" ") || tag.equals("-")) {
-                            oldChunkLines.append(rest)
-                        }
-                        if (tag.equals(" ") || tag.equals("+")) {
-                            newChunkLines.append(rest)
-                        }
-                    }
-                    patch.addDelta(ChangeDelta<String>(Chunk<String>(
-                            old_ln - 1, oldChunkLines), Chunk<String>(
-                            new_ln - 1, newChunkLines)))
-                    rawChunk.clear()
-                }
+                if (rawChunk.size != 0) { extracted(rawChunk, patch, old_ln, new_ln) }
                 //Parse the @@ header
                 try {
                     old_ln =Int64.parse(v.matchStr(1))
@@ -145,24 +125,10 @@ public class DiffUtils {
                 } catch (e: Exception) {
                     new_ln = 1
                 }
-
-                if (old_ln == 0) {
-                    old_ln += 1
-                }
-                if (new_ln == 0) {
-                    new_ln += 1
-                }
-            } else {
-                if (line.size > 0) {
-                    tag = line.substring(0, 1)
-                    rest = line.substring(1)
-                    if (tag.equals(" ") || tag.equals("+") || tag.equals("-")) {
-                        rawChunk.append([tag, rest])
-                    }
-                } else {
-                    rawChunk.append([" ", ""])
-                }
-            }
+                if (old_ln == 0) { old_ln += 1 }
+                if (new_ln == 0) { new_ln += 1 }
+            } 
+            if (let None = m) { checkval(rawChunk, line) }
         }
 
         // Process the lines in the last chunk
@@ -173,18 +139,42 @@ public class DiffUtils {
             for (raw_line in rawChunk) {
                 tag = raw_line[0]
                 rest = raw_line[1]
-                if (tag.equals(" ") || tag.equals("-")) {
-                    oldChunkLines.append(rest)
-                }
-                if (tag.equals(" ") || tag.equals("+")) {
-                    newChunkLines.append(rest)
-                }
+                if (tag.equals(" ") || tag.equals("-")) { oldChunkLines.append(rest) }
+                if (tag.equals(" ") || tag.equals("+")) { newChunkLines.append(rest) }
             }
             patch.addDelta(ChangeDelta<String>(Chunk<String>(old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1,newChunkLines)))
             rawChunk.clear()
         }
 
         return patch
+    }
+
+    private static func checkval(rawChunk: ArrayList<Array<String>>,  line: String) {
+        var tag: String
+        var rest: String
+        if (line.size > 0) {
+            tag = line.substring(0, 1)
+            rest = line.substring(1)
+           if (tag.equals(" ") || tag.equals("+") || tag.equals("-")) { rawChunk.append([tag, rest]) }
+        } else { 
+            rawChunk.append([" ", ""])
+        }
+    }
+
+    private static func extracted(rawChunk: ArrayList<Array<String>>,  patch: Patch<String>, old_ln: Int64, new_ln: Int64) {
+        var tag: String
+        var rest: String
+        var oldChunkLines = ArrayList<String>()
+        var newChunkLines = ArrayList<String>()
+
+        for (raw_line in rawChunk) {
+            tag = raw_line[0]
+            rest = raw_line[1]
+            if (tag.equals(" ") || tag.equals("-")) { oldChunkLines.append(rest) }
+            if (tag.equals(" ") || tag.equals("+")) { newChunkLines.append(rest) }
+        }
+        patch.addDelta(ChangeDelta<String>(Chunk<String>( old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1, newChunkLines)))
+        rawChunk.clear()
     }
 
     /**
@@ -277,29 +267,19 @@ public class DiffUtils {
         var buffer =  ArrayList<String>()
         var origTotal: Int64 = 0 // counter for total lines output from Original
         var revTotal: Int64 = 0 // counter for total lines output from Original
-        var line: Int64
 
         var curDelta: Delta<String> = deltas.get(0).getOrThrow()
 
         // NOTE: +1 to overcome the 0-offset Position
         var origStart = curDelta.getOriginal().getPosition() + 1 - contextSize
-        if (origStart < 1) {
-            origStart = 1
-        }
 
         var revStart = curDelta.getRevised().getPosition() + 1 - contextSize
-        if (revStart < 1) {
-            revStart = 1
-        }
 
         // find the start of the wrapper context code
         var contextStart = curDelta.getOriginal().getPosition() - contextSize
-        if (contextStart < 0) {
-            contextStart = 0 // clamp to the start of the file
-        }
-
+        (origStart,revStart,contextStart) = checkVal(origStart,revStart,contextStart)
         // output the context before the first Delta
-        line = contextStart
+        var line: Int64 = contextStart
         while (line < curDelta.getOriginal().getPosition()) { //
             buffer.append(" " + origLines.get(line).getOrThrow())
             origTotal++
@@ -343,6 +323,13 @@ public class DiffUtils {
 
         // Create and insert the block header, conforming to the Unified Diff
         // standard
+        var header = appendHeader(origStart,origTotal,revStart,revTotal)
+        buffer.insert(0, header.toString())
+        return buffer
+    }
+
+
+    private static func appendHeader(origStart: Int64,origTotal: Int64,revStart: Int64,revTotal: Int64): StringBuilder{
         var header = StringBuilder()
         header.append("@@ -")
         header.append(origStart)
@@ -353,9 +340,23 @@ public class DiffUtils {
         header.append(",")
         header.append(revTotal)
         header.append(" @@")
-        buffer.insert(0, header.toString())
+        return header
+    }
 
-        return buffer
+    private static func checkVal(origStart: Int64,revStart: Int64,contextStart: Int64): (Int64,Int64,Int64) {
+        var val1: Int64 = origStart
+        var val2: Int64 = revStart
+        var val3: Int64 = contextStart
+        if (val1 < 1) {
+            val1 = 1
+        }
+        if (val2 < 1) {
+            val2 = 1
+        }
+        if (val3 < 0) {
+            val3 = 0 // clamp to the start of the file
+        }
+        return (val1,val2,val3)
     }
 
     /**

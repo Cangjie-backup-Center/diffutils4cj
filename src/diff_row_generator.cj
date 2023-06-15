@@ -78,16 +78,7 @@ public class DiffRowGenerator {
             var rev: Chunk<String> = delta.getRevised()
 
             // We should normalize and wrap lines in deltas too.
-            orig.setLines(StringUtills.normalize(orig.getLines()))
-            rev.setLines(StringUtills.normalize(rev.getLines()))
-
-            orig.setLines(StringUtills.wrapText(orig.getLines(), this.columnWidth))
-            rev.setLines(StringUtills.wrapText(rev.getLines(), this.columnWidth))
-
-            // catch the equal prefix for each chunk
-            for (line in original_.slice(endPos..orig.getPosition())) {
-                diffRows.append(DiffRow(Tag.EQUAL, line, line))
-            }
+            setlineExtracted(original, diffRows, endPos, orig, rev)
 
             // Inserted DiffRow
             if (delta is InsertDelta<String>) {
@@ -108,49 +99,62 @@ public class DiffRowGenerator {
                 i++
                 continue
             }
-            if (showInlineDiffs) {
-                addInlineDiffs(delta)
-            }
+            if (showInlineDiffs) { addInlineDiffs(delta) }
             //the changed size is match
-            if (orig.size() == rev.size()) {
-                var j = 0
-                while (j < orig.size()) {
-                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
-                    j++
-                }
-            } else if (orig.size() > rev.size()) {
-                var j = 0
-                while (j < orig.size()) {
-                    if (rev.getLines().size > j) {
-                        diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
-                    } else {
-                        diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), ""))
-                    }
-                    j++
-                }
-            } else {
-                var j = 0
-                while (j < rev.size()) {
-                    if (orig.getLines().size > j) {
-                        diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
-                    } else {
-                        diffRows.append(DiffRow(Tag.CHANGE, "", rev.getLines().get(j).getOrThrow()))
-                    }
-                    j++
-                }
-            }
+            extracted(diffRows, orig, rev)
             endPos = orig.last() + 1
             i++
         }
 
         // Copy the final matching chunk if any.
-        if (endPos == original.size) {
-            return diffRows
-        }
+        if (endPos == original.size) { return diffRows }
         for (line in original.slice(endPos..original.size)) {
             diffRows.append(DiffRow(Tag.EQUAL, line, line))
         }
         return diffRows
+    }
+
+    private static func extracted(diffRows: ArrayList<DiffRow> , orig: Chunk<String>, rev: Chunk<String>) {
+        if (orig.size() == rev.size()) {
+            var j = 0
+            while (j < orig.size()) {
+                diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
+                j++
+            }
+        } else if (orig.size() > rev.size()) {
+            var j = 0
+            while (j < orig.size()) {
+                if (rev.getLines().size > j) {
+                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
+                } else {
+                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), ""))
+                }
+                j++
+            }
+        } else {
+            var j = 0
+            while (j < rev.size()) {
+                if (orig.getLines().size > j) {
+                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
+                } else {
+                    diffRows.append(DiffRow(Tag.CHANGE, "", rev.getLines().get(j).getOrThrow()))
+                }
+                j++
+            }
+        }
+    }
+
+    private func setlineExtracted(original: ArrayList<String>, diffRows: ArrayList<DiffRow>, endPos: Int64, orig: Chunk<String>, rev: Chunk<String>) {
+        orig.setLines(StringUtills.normalize(orig.getLines()))
+        rev.setLines(StringUtills.normalize(rev.getLines()))
+
+        orig.setLines(StringUtills.wrapText(orig.getLines(), this.columnWidth))
+        rev.setLines(StringUtills.wrapText(rev.getLines(), this.columnWidth))
+
+        // catch the equal prefix for each chunk
+        for (line in original.slice(endPos..orig.getPosition())) {
+            diffRows.append(DiffRow(Tag.EQUAL, line, line))
+        }
     }
 
     /**
