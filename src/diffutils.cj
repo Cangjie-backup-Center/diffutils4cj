@@ -4,10 +4,11 @@
 
 package diffUtils4cj
 from std import regex.*
+from std import convert.*
 
 public class DiffUtils {
 
-    private let  unifiedDiffChunkRe: Regex = Regex("^@@\\s+-(?:(\\d+)(?:,(\\d+))?)\\s+\\+(?:(\\d+)(?:,(\\d+))?)\\s+@@$")
+    private static let unifiedDiffChunkRe: Regex = Regex("^@@\\s+-(?:(\\d+)(?:,(\\d+))?)\\s+\\+(?:(\\d+)(?:,(\\d+))?)\\s+@@$")
     
     /**
      * Computes the difference between the original and revised list of elements
@@ -36,7 +37,7 @@ public class DiffUtils {
      */
     public static func diff<T>(original: ArrayList<T>, revised: ArrayList<T>,
             algorithm: DiffAlgorithm<T>): Patch<T> where T <: Equal<T> & ToString{
-        return algorithm.diff(original, revised);
+        return algorithm.diff(original, revised)
     }
 
     /**
@@ -81,5 +82,299 @@ public class DiffUtils {
     public static func unpatch<T>(revised: ArrayList<T>, patch: Patch<T>): ArrayList<T>
             where T <: Equal<T> & ToString{
         return patch.restore(revised)
+    }
+
+    /**
+     * Parse the given text in unified format and creates the list of deltas for
+     * it.
+     * 
+     * @param diff the text in unified format
+     * @return the patch with deltas.
+     *   
+     * @since 0.39.3
+     */
+    public static func parseUnifiedDiff(diff: ArrayList<String>): Patch<String> {
+        var inPrelude = true
+        var rawChunk = ArrayList<Array<String>>()
+        var patch = Patch<String>()
+
+        var old_ln = 0
+        var new_ln = 0
+        var tag: String
+        var rest: String
+
+        for (line in diff) {
+            // Skip leading lines until after we've seen one starting with '+++'
+            if (inPrelude) {
+                if (line.startsWith("+++")) {
+                    inPrelude = false
+                }
+                continue
+            }            
+            var m = unifiedDiffChunkRe.matcher(line).find()
+
+            if (let Some(v) = m) {
+                // Process the lines in the previous chunk
+                if (rawChunk.size != 0) {
+                    var oldChunkLines = ArrayList<String>()
+                    var newChunkLines = ArrayList<String>()
+
+                    for (raw_line in rawChunk) {
+                        tag = raw_line[0]
+                        rest = raw_line[1]
+                        if (tag.equals(" ") || tag.equals("-")) {
+                            oldChunkLines.append(rest)
+                        }
+                        if (tag.equals(" ") || tag.equals("+")) {
+                            newChunkLines.append(rest)
+                        }
+                    }
+                    patch.addDelta(ChangeDelta<String>(Chunk<String>(
+                            old_ln - 1, oldChunkLines), Chunk<String>(
+                            new_ln - 1, newChunkLines)))
+                    rawChunk.clear()
+                }
+                //Parse the @@ header
+                try {
+                    old_ln =Int64.parse(v.matchStr(1))
+                } catch (e: Exception) {
+                    old_ln = 1
+                }
+                try {
+                    new_ln =Int64.parse(v.matchStr(3))
+                } catch (e: Exception) {
+                    new_ln = 1
+                }
+
+                if (old_ln == 0) {
+                    old_ln += 1
+                }
+                if (new_ln == 0) {
+                    new_ln += 1
+                }
+            } else {
+                if (line.size > 0) {
+                    tag = line.substring(0, 1)
+                    rest = line.substring(1)
+                    if (tag.equals(" ") || tag.equals("+") || tag.equals("-")) {
+                        rawChunk.append([tag, rest])
+                    }
+                } else {
+                    rawChunk.append([" ", ""])
+                }
+            }
+        }
+
+        // Process the lines in the last chunk
+        if (rawChunk.size != 0) {
+            var oldChunkLines = ArrayList<String>()
+            var newChunkLines = ArrayList<String>()
+
+            for (raw_line in rawChunk) {
+                tag = raw_line[0]
+                rest = raw_line[1]
+                if (tag.equals(" ") || tag.equals("-")) {
+                    oldChunkLines.append(rest)
+                }
+                if (tag.equals(" ") || tag.equals("+")) {
+                    newChunkLines.append(rest)
+                }
+            }
+            patch.addDelta(ChangeDelta<String>(Chunk<String>(old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1,newChunkLines)))
+            rawChunk.clear()
+        }
+
+        return patch
+    }
+
+    /**
+     * generateUnifiedDiff takes a Patch and some other arguments, returning the
+     * Unified Diff format text representing the Patch.
+     * 
+     * @param original Filename of the original (unrevised file)
+     * @param revised Filename of the revised file
+     * @param originalLines Lines of the original file
+     * @param patch Patch created by the diff() function
+     * @param contextSize - number of lines of context output around each difference in the file.
+     * @return List of strings representing the Unified Diff representation of the Patch argument.
+     *   
+     * @since 0.39.3
+     */
+    public static func generateUnifiedDiff(original: String,
+            revised: String, originalLines: ArrayList<String>, patch: Patch<String>,
+            contextSize: Int64): ArrayList<String> {
+        if (!patch.getDeltas().isEmpty()) {
+            var ret = ArrayList<String>()
+            ret.append("--- " + original)
+            ret.append("+++ " + revised)
+
+            var patchDeltas: ArrayList<Delta<String>> = ArrayList<Delta<String>>(
+                    patch.getDeltas())
+
+            // code outside the if block also works for single-delta issues.
+            var deltas: ArrayList<Delta<String>> = ArrayList<Delta<String>>() // current
+                                                                                                                        // list
+                                                                                                                        // of
+            // Delta's to
+            // process
+            var delta: Delta<String> = patchDeltas.get(0).getOrThrow()
+            deltas.append(delta) // add the first Delta to the current set
+            // if there's more than 1 Delta, we may need to output them together
+            if (patchDeltas.size > 1) {
+                var i = 1
+                while (i < patchDeltas.size) {
+                    var position = delta.getOriginal().getPosition() // store
+                                                                                                // the
+                                                                                                // current
+                                                                                                // position
+                                                                                                // of
+                    // the first Delta
+
+                    // Check if the next Delta is too close to the current
+                    // position.
+                    // And if it is, add it to the current set
+                    var nextDelta: Delta<String> = patchDeltas.get(i).getOrThrow()
+                    if ((position + delta.getOriginal().size() + contextSize) >= (nextDelta
+                            .getOriginal().getPosition() - contextSize)) {
+                        deltas.append(nextDelta)
+                    } else {
+                        // if it isn't, output the current set,
+                        // then create a new set and add the current Delta to
+                        // it.
+                        var curBlock: ArrayList<String> = processDeltas(originalLines,
+                                deltas, contextSize)
+                        ret.appendAll(curBlock)
+                        deltas.clear()
+                        deltas.append(nextDelta)
+                    }
+                    delta = nextDelta
+                    i++
+                }
+
+            }
+            // don't forget to process the last set of Deltas
+            var curBlock: ArrayList<String> = processDeltas(originalLines, deltas,
+                    contextSize)
+            ret.appendAll(curBlock)
+            return ret
+        }
+        return ArrayList<String>()
+    }
+
+    /**
+     * processDeltas takes a list of Deltas and outputs them together in a
+     * single block of Unified-Diff-format text.
+     * 
+     * @param origLines - the lines of the original file
+     * @param deltas - the Deltas to be output as a single block
+     * @param contextSize - the number of lines of context to place around block
+     * @return List of strings representing the Unified Diff representation of the Patch argument.
+     *   
+     * @since 0.39.3
+     */
+    private static func processDeltas(origLines: ArrayList<String>,
+             deltas: ArrayList<Delta<String>>, contextSize: Int64): ArrayList<String> {
+        var buffer =  ArrayList<String>()
+        var origTotal: Int64 = 0 // counter for total lines output from Original
+        var revTotal: Int64 = 0 // counter for total lines output from Original
+        var line: Int64
+
+        var curDelta: Delta<String> = deltas.get(0).getOrThrow()
+
+        // NOTE: +1 to overcome the 0-offset Position
+        var origStart = curDelta.getOriginal().getPosition() + 1 - contextSize
+        if (origStart < 1) {
+            origStart = 1
+        }
+
+        var revStart = curDelta.getRevised().getPosition() + 1 - contextSize
+        if (revStart < 1) {
+            revStart = 1
+        }
+
+        // find the start of the wrapper context code
+        var contextStart = curDelta.getOriginal().getPosition() - contextSize
+        if (contextStart < 0) {
+            contextStart = 0 // clamp to the start of the file
+        }
+
+        // output the context before the first Delta
+        line = contextStart
+        while (line < curDelta.getOriginal().getPosition()) { //
+            buffer.append(" " + origLines.get(line).getOrThrow())
+            origTotal++
+            revTotal++
+            line++
+        }
+
+        // output the first Delta
+        buffer.appendAll(getDeltaText(curDelta))
+        origTotal += curDelta.getOriginal().getLines().size
+        revTotal += curDelta.getRevised().getLines().size
+
+        var deltaIndex = 1
+        while (deltaIndex < deltas.size) { // for each of the other Deltas
+            var nextDelta: Delta<String> = deltas.get(deltaIndex).getOrThrow()
+            var intermediateStart = curDelta.getOriginal().getPosition()+ curDelta.getOriginal().getLines().size
+            line = intermediateStart
+            while ( line < nextDelta.getOriginal().getPosition() ) {
+                // output the code between the last Delta and this one
+                buffer.append(" " + origLines.get(line).getOrThrow())
+                origTotal++
+                revTotal++
+                line++
+            }
+            buffer.appendAll(getDeltaText(nextDelta)) // output the Delta
+            origTotal += nextDelta.getOriginal().getLines().size
+            revTotal += nextDelta.getRevised().getLines().size
+            curDelta = nextDelta
+            deltaIndex++
+        }
+
+        // Now output the post-Delta context code, clamping the end of the file
+        contextStart = curDelta.getOriginal().getPosition()    + curDelta.getOriginal().getLines().size
+        line = contextStart
+        while ( (line < (contextStart + contextSize))&& (line < origLines.size)) {
+            buffer.append(" " + origLines.get(line).getOrThrow())
+            origTotal++
+            revTotal++
+            line++
+        }
+
+        // Create and insert the block header, conforming to the Unified Diff
+        // standard
+        var header = StringBuilder()
+        header.append("@@ -")
+        header.append(origStart)
+        header.append(",")
+        header.append(origTotal)
+        header.append(" +")
+        header.append(revStart)
+        header.append(",")
+        header.append(revTotal)
+        header.append(" @@")
+        buffer.insert(0, header.toString())
+
+        return buffer
+    }
+
+    /**
+     * getDeltaText returns the lines to be added to the Unified Diff text from
+     * the Delta parameter
+     * 
+     * @param delta  - the Delta to output
+     * @return list of String lines of code.
+     *   
+     * @since 0.39.3
+     */
+    private static func getDeltaText(delta: Delta<String>): ArrayList<String> {
+        var buffer: ArrayList<String> = ArrayList<String>()
+        for (line in delta.getOriginal().getLines()) {
+            buffer.append("-" + line)
+        }
+        for (line in delta.getRevised().getLines()) {
+            buffer.append("+" + line)
+        }
+        return buffer
     }
 }
