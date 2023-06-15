@@ -88,6 +88,6 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString{
      * @since 0.38.2
      */
     public func toString(): String {
-        return "[InsertDelta, position: ${getOriginal().getPosition()}" + ", lines: ${getOriginal().getLines()}" + "]"
+        return "[InsertDelta, position: ${getOriginal().getPosition()}" + ", lines: ${getRevised().getLines()}" + "]"
     }
 }

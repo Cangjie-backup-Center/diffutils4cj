@@ -590,3 +590,288 @@ main(): Int64 {
      return 1
 }
 ```
+
+#### 1.3 固定格式显示两组字符串的差异
+
+固定格式逐行显示两组字符串之间的差异
+
+##### 1.3.1 主要接口
+
+```cangjie
+public class DiffUtils {
+    /*
+     * 生成 Unified 格式的差异文本
+     * 参数 original - 原始文本内容
+     * 参数 revised - 修改后的文本内容
+     * 参数 originalLines - 原始文本按行分割的列表
+     * 参数 patch - 表示差异的 Patch 对象
+     * 参数 contextSize - 上下文大小，表示差异文本中添加的上下文行数
+     * 返回值 Patch<T> - 返回差异对象
+     */
+    public static func generateUnifiedDiff(original: String, revised: String, originalLines: ArrayList<String>, patch: Patch<String>,contextSize: Int64): ArrayList<String>
+
+    /*
+     * 解析 Unified 格式的差异文本并生成一个 Patch 对象
+     * 参数 diff - Unified 格式的差异文本
+     * 返回值 Patch<String> - 解析后的差异信息
+     */
+    public static func parseUnifiedDiff(diff: ArrayList<String>): Patch<String>
+}
+
+public class DiffRowGenerator {
+    /*
+     * 生成差异行列表
+     * 参数 original - 原始文本列表
+     * 参数 revised - 修改后的文本列表
+     * 返回值 ArrayList<DiffRow> - 保存差异信息的 DiffRow 列表
+     */
+     public func generateDiffRows(original: ArrayList<String>, revised: ArrayList<String>): ArrayList<DiffRow>
+
+    /*
+     * 生成差异行列表
+     * 参数 original - 原始文本列表
+     * 参数 revised - 修改后的文本列表
+     * 参数 patch - 差异 Patch 对象
+     * 返回值 ArrayList<DiffRow> - 保存差异信息的 DiffRow 列表
+     */
+     public func generateDiffRows(original: ArrayList<String>, revised: ArrayList<String>, patch: Patch<String>): ArrayList<DiffRow>
+
+    /*
+     * 将指定位置范围内的字符串列表中的元素用指定的 HTML 标签和 CSS 类进行包装
+     * 参数 sequence - 字符串列表，表示要进行包装操作的序列
+     * 参数 startPosition - 起始位置，要进行包装的范围的起始索引
+     * 参数 endPosition - 结束位置，要进行包装的范围的结束索引
+     * 参数 tag - 要包装的 HTML 标签
+     * 参数 cssClass - 要应用的 CSS 类
+     * 返回值 ArrayList<String> - 包装后的字符串列表
+     */
+     public static func wrapInTag(sequence: ArrayList<String>, startPosition: Int64, endPosition: Int64,tag: String, cssClass: String): ArrayList<String>
+
+    /*
+     * 将指定位置范围内的字符串中的元素用指定的 HTML 标签和 CSS 类进行包装
+     * 参数 sequence - 字符串，表示要进行包装操作的序列
+     * 参数 tag - 要包装的 HTML 标签
+     * 参数 cssClass - 要应用的 CSS 类
+     * 返回值 ArrayList<String> - 包装后的字符串
+     */
+     public static func wrapInTag(line: String, tag: String, cssClass: String): String
+}
+
+public class Builder {
+    /*
+     * 设置是否在生成的差异行中显示内联差异
+     * 参数 val - 是否显示内联差异
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func showInlineDiffs(val: Bool): Builder
+
+    /*
+     * 设置是否在生成的差异行中忽略空白字符的差异
+     * 参数 val - 是否显示内联差异
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func ignoreWhiteSpaces(val: Bool): Builder
+
+    /*
+     * 设置是否忽略空白行的差异
+     * 参数 val - 是否忽略
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func ignoreBlankLines(val: Bool): Builder
+
+    /*
+     * 设置内联显示差异行中旧文本的标签
+     * 参数 tag - 标签名
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func InlineOldTag(tag: String): Builder
+
+    /*
+     * 设置内联显示差异行中新文本的标签
+     * 参数 tag - 标签名
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func InlineNewTag(tag: String): Builder
+
+    /*
+     * 设置内联显示差异行中旧文本的 CSS 类
+     * 参数 cssClass - CSS 类名
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func InlineOldCssClass(cssClass: String): Builder
+
+    /*
+     * 设置内联显示差异行中新文本的 CSS 类
+     * 参数 cssClass - CSS 类名
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func InlineNewCssClass(cssClass: String): Builder
+
+    /*
+     * 设置差异行生成器中列的宽度
+     * 参数 width - 行宽
+     * 返回值 Builder - 返回一个 Builder 对象
+     */
+     public func columnWidth(width: Int64): Builder
+
+    /*
+     * 生成一个 DiffRowGenerator 对象
+     * 返回值 DiffRowGenerator - 返回一个 DiffRowGenerator 对象
+     */
+     public func build(): DiffRowGenerator
+}
+
+public class DiffRow <: ToString {
+    /*
+     * 默认构造
+     * 参数 tag - 差异行的标签 Tag
+     * 参数 oldLine - 旧文本行
+     * 参数 newLine - 新文本行
+     */
+     public init(tag: Tag, oldLine: String, newLine: String)
+
+    /*
+     * 获取差异行标签 Tag
+     * 返回值 Tag - 标签 Tag
+     */
+     public func getTag(): Tag
+
+    /*
+     * 设置差异行标签 Tag
+     * 参数 tag - 标签 Tag
+     */
+     public func setTag(tag: Tag): Unit
+
+    /*
+     * 获取旧文本
+     * 返回值 String - 旧文本
+     */
+     public func getOldLine():String
+
+    /*
+     * 设置旧文本
+     * 参数 oldLine - 旧文本
+     */
+     public func setOldLine(oldLine: String): Unit
+
+    /*
+     * 获取新文本
+     * 返回值 String - 新文本
+     */
+     public func getNewLine(): String
+
+    /*
+     * 设置新文本
+     * 参数 String - 新文本
+     */
+     public func setNewLine(newLine: String): Unit
+
+    /*
+     * 转换成字符串
+     * 返回值 String - 返回字符串
+     */
+     public func toString(): String
+}
+
+public enum Tag <: ToString {
+     /** 插入标签 */
+    | INSERT
+    /** 删除标签 */
+    | DELETE
+    /** 更新标签 */
+    | CHANGE
+    /** 相同标签 */
+    | EQUAL
+
+    /*
+     * 转换成字符串
+     * 返回值 String - 返回字符串
+     */
+    public func toString(): String
+}
+
+public class StringUtills {
+    /*
+     * 将一个可迭代对象中的元素用指定的分隔符连接成一个字符串
+     * 参数 objs - 一个实现了 Iterable<T> 的可迭代对象
+     * 参数 delimiter - 指定的分隔符
+     * 返回值 String - 连接后的字符串
+     */
+     public static func join<T>(objs: Iterable<T>, delimiter: String): String where T <: ToString
+
+    /*
+     * 将字符串中的制表符转换为相应数量的空格字符
+     * 参数 str - 要转换的字符串
+     * 返回值 String - 转换后的字符串
+     */
+     public static func expandTabs(str: String): String
+
+    /*
+     * 将字符串中的特殊字符转换为对应的HTML实体编码
+     * 参数 str - 要转换的字符串
+     * 返回值 String - 转换后的字符串
+     */
+     public static func htmlEntites(str: String): String
+
+    /*
+     * 去除开头和结尾的空白字符，并将连续的空白字符替换为单个空格
+     * 参数 str - 要转换的字符串
+     * 返回值 String - 转换后的字符串
+     */
+     public static func normalize(str: String): String
+
+    /*
+     * 对列表中的每个字符串进行规范化处理，去除开头和结尾的空白字符，并将连续的空白字符替换为单个空格
+     * 参数 list - 要转换的列表
+     * 返回值 ArrayList<String> - 转换后的列表
+     */
+     public static func normalize(list: ArrayList<String>): ArrayList<String>
+
+    /*
+     * 将字符串列表中的每个字符串按指定的列宽进行换行处理
+     * 参数 list - 要转换的列表
+     * 参数 columnWidth - 行宽
+     * 返回值 ArrayList<String> - 转换后的列表
+     */
+     public static func wrapText( list: ArrayList<String>, columnWidth: Int64): ArrayList<String>
+
+    /*
+     * 将字符串按指定的列宽进行换行处理
+     * 参数 line - 要转换字符串
+     * 参数 columnWidth - 行宽
+     * 返回值 String - 转换后的字符串
+     */
+     public static func wrapText(line: String, columnWidth: Int64): String
+}
+```
+
+##### 1.3.2 示例
+
+```cangjie
+main(): Int64 {
+     var first = "anything \n \nother\nmore lines";
+     var second ="anything\n\nother\nsome more lines";
+     var generator = Builder()
+          .ignoreWhiteSpaces(true)
+          .columnWidth(Int64.Max) // do not wrap
+          .build();
+     var rows = generator.generateDiffRows(split(first), split(second))
+     if(4 != rows.size) {
+          return 1
+     }
+     if(rows.get(0).getOrThrow().getTag().toString() != "EQUAL") {
+          retutn 1
+     }
+     if(rows.get(1).getOrThrow().getTag().toString() != "EQUAL") {
+          retutn 1
+     }
+     if(rows.get(2).getOrThrow().getTag().toString() != "EQUAL") {
+          retutn 1
+     }
+     if(rows.get(3).getOrThrow().getTag().toString() != "CHANGE") {
+          retutn 1
+     }
+     println("pass")
+     return 0
+}
+```

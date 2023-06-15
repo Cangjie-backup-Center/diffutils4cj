@@ -33,7 +33,7 @@ public class deltaTest {
         var revised: Chunk<String> = Chunk<String>(55, ["test2"])
         var delta = InsertDelta<String>(original, revised)
         var str = delta.toString()
-        @Assert(str,"[InsertDelta, position: 12, lines: [test]]")
+        @Assert(str,"[InsertDelta, position: 12, lines: [test2]]")
     }
 
     @TestCase
@@ -52,7 +52,6 @@ public class deltaTest {
         var delta = DeleteDelta<String>(c1, c2)
         var c3: Chunk<String> = Chunk<String>(987, ["test"])
         var delta2 = DeleteDelta<String>(c1, c3)
-        var str = delta.toString()
         @Assert(false,delta.equals(delta2))
     }
 }

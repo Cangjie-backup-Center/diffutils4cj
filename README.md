@@ -6,7 +6,7 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.39.3-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-95.6%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-93.3%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -20,6 +20,7 @@
 
 - 🚀 对比两组字符串之间的差异
 - 💪 提供添加和打包补丁的功能
+- 🚀 固定格式显示两组字符串的差异
 
 
 ## 软件架构
@@ -136,6 +137,45 @@ main(): Int64 {
         return 0
     }
     return 1
+}
+```
+
+执行结果如下：
+
+```shell
+pass
+```
+
+#### 固定格式显示两组字符串的差异
+
+示例代码如下：
+
+```cangjie
+main(): Int64 {
+    var first = "anything \n \nother\nmore lines";
+    var second ="anything\n\nother\nsome more lines";
+    var generator = Builder()
+         .ignoreWhiteSpaces(true)
+         .columnWidth(Int64.Max) // do not wrap
+         .build();
+    var rows = generator.generateDiffRows(split(first), split(second))
+    if(4 != rows.size) {
+         return 1
+    }
+    if(rows.get(0).getOrThrow().getTag().toString() != "EQUAL") {
+         retutn 1
+    }
+    if(rows.get(1).getOrThrow().getTag().toString() != "EQUAL") {
+         retutn 1
+    }
+    if(rows.get(2).getOrThrow().getTag().toString() != "EQUAL") {
+         retutn 1
+    }
+    if(rows.get(3).getOrThrow().getTag().toString() != "CHANGE") {
+         retutn 1
+    }
+    println("pass")
+    return 0
 }
 ```
 

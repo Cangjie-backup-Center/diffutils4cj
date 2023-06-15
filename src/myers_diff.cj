@@ -118,8 +118,6 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
                     i++
                     j++
                 }
-                var temi = i
-                var temnodei = node.i
                 if (i > node.i) {
                     node =  Snake(i, j, node)
                 }
