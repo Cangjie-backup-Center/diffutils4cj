@@ -642,19 +642,19 @@ public class DiffRowGenerator {
      * 参数 startPosition - 起始位置，要进行包装的范围的起始索引
      * 参数 endPosition - 结束位置，要进行包装的范围的结束索引
      * 参数 tag - 要包装的 HTML 标签
-     * 参数 cssClass - 要应用的 CSS 类
+     * 参数 ?cssClass - 要应用的 CSS 类
      * 返回值 ArrayList<String> - 包装后的字符串列表
      */
-     public static func wrapInTag(sequence: ArrayList<String>, startPosition: Int64, endPosition: Int64,tag: String, cssClass: String): ArrayList<String>
+     public static func wrapInTag(sequence: ArrayList<String>, startPosition: Int64, endPosition: Int64,tag: String, cssClass: ?String): ArrayList<String>
 
     /*
      * 将指定位置范围内的字符串中的元素用指定的 HTML 标签和 CSS 类进行包装
      * 参数 sequence - 字符串，表示要进行包装操作的序列
      * 参数 tag - 要包装的 HTML 标签
-     * 参数 cssClass - 要应用的 CSS 类
+     * 参数 ?cssClass - 要应用的 CSS 类
      * 返回值 ArrayList<String> - 包装后的字符串
      */
-     public static func wrapInTag(line: String, tag: String, cssClass: String): String
+     public static func wrapInTag(line: String, tag: String, ?cssClass: String): String
 }
 
 public class Builder {
@@ -814,14 +814,14 @@ public class StringUtills {
      public static func htmlEntites(str: String): String
 
     /*
-     * 去除开头和结尾的空白字符，并将连续的空白字符替换为单个空格
+     * 将字符串中的特殊字符转换为对应的 HTML 实体编码，并将制表符转换为相应数量的空格字符
      * 参数 str - 要转换的字符串
      * 返回值 String - 转换后的字符串
      */
      public static func normalize(str: String): String
 
     /*
-     * 对列表中的每个字符串进行规范化处理，去除开头和结尾的空白字符，并将连续的空白字符替换为单个空格
+     * 对列表中的每个字符串进行规范化处理，将每个字符串中的特殊字符转换为对应的 HTML 实体编码，并将制表符转换为相应数量的空格字符
      * 参数 list - 要转换的列表
      * 返回值 ArrayList<String> - 转换后的列表
      */
@@ -830,7 +830,7 @@ public class StringUtills {
     /*
      * 将字符串列表中的每个字符串按指定的列宽进行换行处理
      * 参数 list - 要转换的列表
-     * 参数 columnWidth - 行宽
+     * 参数 columnWidth - 列宽
      * 返回值 ArrayList<String> - 转换后的列表
      */
      public static func wrapText( list: ArrayList<String>, columnWidth: Int64): ArrayList<String>
@@ -838,7 +838,7 @@ public class StringUtills {
     /*
      * 将字符串按指定的列宽进行换行处理
      * 参数 line - 要转换字符串
-     * 参数 columnWidth - 行宽
+     * 参数 columnWidth - 列宽
      * 返回值 String - 转换后的字符串
      */
      public static func wrapText(line: String, columnWidth: Int64): String
