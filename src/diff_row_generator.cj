@@ -215,14 +215,14 @@ public class DiffRowGenerator {
      * @since 0.39.3
      */
     public static func wrapInTag(sequence: ArrayList<String>, startPosition: Int64,
-            endPosition: Int64,tag: String, cssClass: String): ArrayList<String> {
+            endPosition: Int64,tag: String, cssClass: ?String): ArrayList<String> {
         var result = sequence.clone()
         var tagBuilder = StringBuilder()
         tagBuilder.append("<")
         tagBuilder.append(tag)
-        if (!cssClass.isEmpty()) {
+        if (let Some(v) = cssClass) {
             tagBuilder.append(" class=\"")
-            tagBuilder.append(cssClass)
+            tagBuilder.append(v)
             tagBuilder.append("\"")
         }
         tagBuilder.append(">")
@@ -250,13 +250,13 @@ public class DiffRowGenerator {
      * 
      * @since 0.39.3
      */
-    public static func wrapInTag(line: String, tag: String, cssClass: String): String {
+    public static func wrapInTag(line: String, tag: String, cssClass: ?String): String {
         var tagBuilder = StringBuilder()
         tagBuilder.append("<")
         tagBuilder.append(tag)
-         if (!cssClass.isEmpty()) {
+        if (let Some(v) = cssClass) {
             tagBuilder.append(" class=\"")
-            tagBuilder.append(cssClass)
+            tagBuilder.append(v)
             tagBuilder.append("\"")
         }
         tagBuilder.append(">")
