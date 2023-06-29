@@ -1,0 +1,19 @@
+// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+
+from std import unittest.*
+from std import unittest.testmacro.*
+from diffUtils4cj import diffUtils4cj.*
+
+@Test
+public class TestStringUtills{
+    /***
+        public static func expandTabs(str: String): String
+        测试场景:str包含单个/多个:"\t"
+    ***/
+    @TestCase
+    func testStringUtillsExpandTabs02(): Unit {
+        let str01="ab\tcd\trf\t\t"
+        let re_expandTabs01=StringUtills.expandTabs(str01)
+        @Assert(re_expandTabs01,"ab    cd    rf        ")
+    }
+}

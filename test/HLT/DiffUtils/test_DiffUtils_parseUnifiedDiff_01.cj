@@ -1,0 +1,21 @@
+// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+
+from std import unittest.*
+from std import unittest.testmacro.*
+from std import collection.*
+from diffUtils4cj import diffUtils4cj.*
+
+@Test
+public class TestDiffUtilsV002{
+    /***
+        public static func parseUnifiedDiff(diff: ArrayList<String>): Patch<String>
+        测试场景:入参数组为空
+    ***/
+    @TestCase
+    func testDiffUtilsParseUnifiedDiff01(): Unit {
+        let diff=ArrayList<String>()
+        let patch=DiffUtils.parseUnifiedDiff(diff)
+        let deltas=patch.getDeltas()
+        @Assert(deltas.size,0)
+    }
+}

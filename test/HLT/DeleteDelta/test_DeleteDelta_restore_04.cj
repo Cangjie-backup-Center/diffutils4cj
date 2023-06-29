@@ -1,0 +1,29 @@
+// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+
+from std import unittest.*
+from std import unittest.testmacro.*
+from std import collection.*
+from diffUtils4cj import diffUtils4cj.*
+
+@Test
+public class TestDeleteDeltaV002{
+    /***
+        public init(original: Chunk<T>, revised: Chunk<T> )
+        public func restore(target: ArrayList<T>): Unit
+        测试场景:revised.getPosition()<0
+    ***/
+    @TestCase
+    func testDeleteDeltaRestore04(): Unit {
+        var original=Chunk(-1,ArrayList<Int64>([1,2,3,4,5,6]))
+        var revised=Chunk(-1,Array<Int64>([7,8,9,10,11,12]))
+        let deleteDelta=DeleteDelta(original,revised)
+        var target=ArrayList<Int64>([1,2,3,4,5,6])
+        var flag=1
+        try{
+            deleteDelta.restore(target)
+        }catch(e:IndexOutOfBoundsException){
+            flag=0
+        }
+        @Assert(flag,0)
+    }
+}
