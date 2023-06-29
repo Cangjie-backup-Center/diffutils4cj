@@ -5,3 +5,6 @@
 /ci_lib/
 /ci_test/
 /module-resolve.json
+log/
+tmp/
+module-lock.json

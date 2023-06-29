@@ -1,4 +1,5 @@
 // 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+// 3rd_party_lib_ohos:diffutils4cj/build/aarch64-linux-ohos/diffUtils4cj
 // dependence: ../common_Values.cj
 from std import unittest.*
 from std import unittest.testmacro.*
@@ -22,7 +23,7 @@ public class TestMyersDiffB001{
         var myersDiff01=MyersDiff<String>()
         var flag=1
         try{
-            var patch01=myersDiff01.buildRevision(diffNode01,orig,rev)
+            myersDiff01.buildRevision(diffNode01,orig,rev)
         }catch(e:IndexOutOfBoundsException){
             flag=0
         }
@@ -34,7 +35,7 @@ public class TestMyersDiffB001{
         var myersDiff02=MyersDiff<String>(SubEqualizer01<String>())
         var flag=1
         try{
-            var patch01=myersDiff02.buildRevision(diffNode01,orig,rev)
+            myersDiff02.buildRevision(diffNode01,orig,rev)
         }catch(e:IndexOutOfBoundsException){
             flag=0
         }

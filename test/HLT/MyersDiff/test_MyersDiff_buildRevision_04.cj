@@ -1,4 +1,5 @@
 // 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+// 3rd_party_lib_ohos:diffutils4cj/build/aarch64-linux-ohos/diffUtils4cj
 // dependence: ../common_Values.cj
 
 from std import unittest.*
