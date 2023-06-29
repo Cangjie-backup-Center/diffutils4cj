@@ -1,0 +1,33 @@
+// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+
+from std import unittest.*
+from std import unittest.testmacro.*
+from std import collection.*
+from diffUtils4cj import diffUtils4cj.*
+
+@Test
+public class TestInsertDeltaV002{
+    /***
+        public init(original: Chunk<T>, revised: Chunk<T> )
+        public func verify(target: ArrayList<T>): Unit
+        测试场景:original.getOriginal().getPosition()>target.size,抛异常
+    ***/
+    @TestCase
+    func testInsertDeltaVerify01(): Unit {
+        var original=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
+        var revised=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        let insertDelta=InsertDelta(original,revised)
+        var target=ArrayList<Int64>()
+        @Assert(original.getPosition() > target.size,true)
+        var flag=1
+        try{
+            insertDelta.verify(target)
+        }catch(e:PatchFailedException){
+            if(e.toString().contains("Incorrect patch for delta: delta original position > target size")){
+                flag=0
+            }
+        }
+        @Assert(flag,0)
+
+    }
+}

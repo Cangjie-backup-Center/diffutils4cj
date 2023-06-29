@@ -1,0 +1,32 @@
+// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+
+from std import unittest.*
+from std import unittest.testmacro.*
+from std import collection.*
+from diffUtils4cj import diffUtils4cj.*
+
+@Test
+public class TestChangeDeltaV002{
+    /***
+        public init(original: Chunk<T>, revised: Chunk<T> )
+        public func applyTo(target: ArrayList<T>): Unit
+        测试场景:verify结果异常(original.verify(target)异常),结果异常
+    ***/
+    @TestCase
+    func testChangeDeltaApplyTo01(): Unit {
+        var original=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
+        var revised=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        let changeDelta=ChangeDelta(original,revised)
+        var target=ArrayList<Int64>()
+        var flag=1
+        try{
+            changeDelta.applyTo(target)
+        }catch(e:PatchFailedException){
+            if(e.toString().contains("Incorrect Chunk: the position of chunk > target size")){
+                flag=0
+            }
+        }
+        @Assert(flag,0)
+
+    }
+}
