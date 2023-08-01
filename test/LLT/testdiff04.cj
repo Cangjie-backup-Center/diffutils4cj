@@ -16,8 +16,10 @@ main(): Int64 {
     if (!(delta is InsertDelta<String>)) {
         return 1
     }
-    if(delta.getRevised().getLines().getRawArray() != ["aaa"]) {
-        return 1
+    unsafe {
+        if(delta.getRevised().getLines().getRawArray() != ["aaa"]) {
+            return 1
+        }
     }
     if (delta.getRevised().getPosition() != 0) {
         return 1

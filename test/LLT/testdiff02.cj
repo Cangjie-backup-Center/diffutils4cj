@@ -16,8 +16,10 @@ main(): Int64 {
     if (!(delta is DeleteDelta<String>)) {
         return 1
     }
-    if(delta.getOriginal().getLines().getRawArray() != ["ddd", "fff"]) {
-        return 1
+    unsafe {
+        if(delta.getOriginal().getLines().getRawArray() != ["ddd", "fff"]) {
+            return 1
+        }
     }
     if(!delta.getRevised().getLines().isEmpty()) {
         return 1

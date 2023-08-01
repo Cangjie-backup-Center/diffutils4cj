@@ -19,8 +19,10 @@ main(): Int64 {
     if(!delta.getOriginal().getLines().isEmpty()) {
         return 1
     }
-    if(delta.getRevised().getLines().getRawArray() != ["jjj", "kkk"]) {
-        return 1
+    unsafe {
+        if(delta.getRevised().getLines().getRawArray() != ["jjj", "kkk"]) {
+            return 1
+        }
     }
     return 0
 }

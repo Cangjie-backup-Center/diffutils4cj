@@ -5,6 +5,7 @@ from diffUtils4cj import diffUtils4cj.*
 from std import collection.*
 from std import unittest.*
 from std import unittest.testmacro.*
+from std import math.*
 
 main(): Int64 {
     let test = RowTest()
