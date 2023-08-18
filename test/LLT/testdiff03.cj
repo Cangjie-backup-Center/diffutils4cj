@@ -16,11 +16,14 @@ main(): Int64 {
     if (!(delta is ChangeDelta<String>)) {
         return 1
     }
-    if(delta.getOriginal().getLines().getRawArray() != ["bbb"]) {
-        return 1
-    }
-    if(delta.getRevised().getLines().getRawArray() != ["zzz"]) {
-        return 1
+    unsafe {
+        if(delta.getOriginal().getLines().getRawArray() != ["bbb"]) {
+            return 1
+        }
+
+        if(delta.getRevised().getLines().getRawArray() != ["zzz"]) {
+            return 1
+        }
     }
     return 0
 }
