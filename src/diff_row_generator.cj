@@ -220,7 +220,7 @@ public class DiffRowGenerator {
         var tagBuilder = StringBuilder()
         tagBuilder.append("<")
         tagBuilder.append(tag)
-        if (let Some(v) = cssClass) {
+        if (let Some(v) <- cssClass) {
             tagBuilder.append(" class=\"")
             tagBuilder.append(v)
             tagBuilder.append("\"")
@@ -254,7 +254,7 @@ public class DiffRowGenerator {
         var tagBuilder = StringBuilder()
         tagBuilder.append("<")
         tagBuilder.append(tag)
-        if (let Some(v) = cssClass) {
+        if (let Some(v) <- cssClass) {
             tagBuilder.append(" class=\"")
             tagBuilder.append(v)
             tagBuilder.append("\"")
