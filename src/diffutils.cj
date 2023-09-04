@@ -111,7 +111,7 @@ public class DiffUtils {
             }            
             var m = unifiedDiffChunkRe.matcher(line).find()
 
-            if (let Some(v) = m) {
+            if (let Some(v) <- m) {
                 // Process the lines in the previous chunk
                 if (rawChunk.size != 0) { extracted(rawChunk, patch, old_ln, new_ln) }
                 //Parse the @@ header
@@ -128,7 +128,7 @@ public class DiffUtils {
                 if (old_ln == 0) { old_ln += 1 }
                 if (new_ln == 0) { new_ln += 1 }
             } 
-            if (let None = m) { checkval(rawChunk, line) }
+            if (let None <- m) { checkval(rawChunk, line) }
         }
 
         // Process the lines in the last chunk
