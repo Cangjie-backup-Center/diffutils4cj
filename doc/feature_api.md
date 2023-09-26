@@ -403,27 +403,35 @@ public class PatchFailedException <: DiffException {
 ```cangjie
 from diffUtils4cj import diffUtils4cj.*
 from std import collection.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
-main(): Int64 {
-    var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
-    if (patch.getDeltas().isEmpty()) { //Deltas非空，即存在差异
-        return 1
-    }
-    if (1 != patch.getDeltas().size) { //差异个数为一
-        return 1
-    }
-    var  delta = patch.getDeltas().get(0).getOrThrow()
-    if (!(delta is InsertDelta<String>)) { //差异类型为插入
-        return 1
-    }
-    if(!delta.getOriginal().getLines().isEmpty()) { //差异原始数据无变动部分
-        return 1
-    }
-    if(delta.getRevised().getLines().getRawArray() != ["jjj", "kkk"]) { //修订数据改动为["jjj", "kkk"]
-        return 1
-    }
-    return 0
+main() {
+    let ccc = Test_FeatureApi01()
+    ccc.execute()
+    ccc.printResult()
+    0
 }
+@Test
+public class Test_FeatureApi01 {
+    @TestCase
+    public func testFeatureApi01(): Unit {
+		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+		@Assert(patch.getDeltas().isEmpty(),false)
+		@Assert(patch.getDeltas().size,1)
+
+		var  delta = patch.getDeltas().get(0).getOrThrow()
+		@Assert(delta is InsertDelta<String>, true)
+        @Assert(delta.getOriginal().getLines().isEmpty(), true)
+        @Assert(delta.getRevised().getLines().toArray().toString(), "[jjj, kkk]")
+    }
+}
+```
+
+执行结果如下：
+
+```shell
+[ PASSED ] CASE: testFeatureApi01
 ```
 
 #### 1.2 提供添加和打包补丁的功能
@@ -578,17 +586,32 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString {
 ```cangjie
 from diffUtils4cj import diffUtils4cj.*
 from std import collection.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
-main(): Int64 {
-     var rev = ArrayList<String>("hhh", "jjj", "kkk")
-     var orig= ArrayList<String>()
-     var patch:  Patch<String>= DiffUtils.diff(rev, orig)
-     var res = DiffUtils.patch(rev,patch)
-     if (res == orig) {
-          return 0
-     }
-     return 1
+main() {
+    let ccc = Test_FeatureApi02()
+    ccc.execute()
+    ccc.printResult()
+    0
 }
+@Test
+public class Test_FeatureApi02 {
+    @TestCase
+    public func testFeatureApi02(): Unit {
+		var rev = ArrayList<String>("hhh", "jjj", "kkk")
+		var orig= ArrayList<String>()
+		var patch:  Patch<String>= DiffUtils.diff(rev, orig)
+		var res = DiffUtils.patch(rev,patch)
+        @Assert(res == orig, true)
+    }
+}
+```
+
+执行结果如下：
+
+```shell
+[ PASSED ] CASE: testFeatureApi02
 ```
 
 #### 1.3 固定格式显示两组字符串的差异
@@ -848,30 +871,38 @@ public class StringUtills {
 ##### 1.3.2 示例
 
 ```cangjie
-main(): Int64 {
-     var first = "anything \n \nother\nmore lines";
-     var second ="anything\n\nother\nsome more lines";
-     var generator = Builder()
-          .ignoreWhiteSpaces(true)
-          .columnWidth(Int64.Max) // do not wrap
-          .build();
-     var rows = generator.generateDiffRows(split(first), split(second))
-     if(4 != rows.size) {
-          return 1
-     }
-     if(rows.get(0).getOrThrow().getTag().toString() != "EQUAL") {
-          retutn 1
-     }
-     if(rows.get(1).getOrThrow().getTag().toString() != "EQUAL") {
-          retutn 1
-     }
-     if(rows.get(2).getOrThrow().getTag().toString() != "EQUAL") {
-          retutn 1
-     }
-     if(rows.get(3).getOrThrow().getTag().toString() != "CHANGE") {
-          retutn 1
-     }
-     println("pass")
-     return 0
+from diffUtils4cj import diffUtils4cj.*
+from std import collection.*
+from std import math.*
+from std import unittest.*
+from std import unittest.testmacro.*
+
+main() {
+    let ccc = Test_FeatureApi03()
+    ccc.execute()
+    ccc.printResult()
+    0
 }
+@Test
+public class Test_FeatureApi03 {
+    @TestCase
+    public func testFeatureApi03(): Unit {
+		var first = "anything \n \nother\nmore lines"
+		var second ="anything\n\nother\nsome more lines"
+		var generator = Builder().ignoreWhiteSpaces(true).columnWidth(Int64.Max).build()
+		var rows = generator.generateDiffRows(ArrayList<String>(first.split('\n')), ArrayList<String>(second.split('\n')))
+			
+		@Assert(rows.size,4)
+		@Assert(rows.get(0).getOrThrow().getTag().toString(),"EQUAL")
+		@Assert(rows.get(1).getOrThrow().getTag().toString(),"EQUAL")
+        @Assert(rows.get(2).getOrThrow().getTag().toString(),"EQUAL")
+        @Assert(rows.get(3).getOrThrow().getTag().toString(),"CHANGE")
+    }
+}
+```
+
+执行结果如下：
+
+```shell
+[ PASSED ] CASE: testFeatureApi03
 ```

@@ -64,9 +64,8 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
             path = buildPath(original, revised)
             return buildRevision(path, original, revised)
         } catch (e: DifferentiationFailedException) {
-            e.printStackTrace()
+            throw DiffException("Differentiation filed")
         }
-        return Patch<T>()
     }
 
     /**

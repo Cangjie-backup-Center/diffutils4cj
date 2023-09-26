@@ -8,15 +8,15 @@ from std import unittest.*
 from std import unittest.testmacro.*
 
 main() {
-    let ccc = Test_ReadMe03()
+    let ccc = Test_FeatureApi03()
     ccc.execute()
     ccc.printResult()
     0
 }
 @Test
-public class Test_ReadMe03 {
+public class Test_FeatureApi03 {
     @TestCase
-    public func testReadMe01(): Unit {
+    public func testFeatureApi03(): Unit {
 		var first = "anything \n \nother\nmore lines"
 		var second ="anything\n\nother\nsome more lines"
 		var generator = Builder().ignoreWhiteSpaces(true).columnWidth(Int64.Max).build()

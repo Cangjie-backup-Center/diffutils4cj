@@ -7,15 +7,15 @@ from std import unittest.*
 from std import unittest.testmacro.*
 
 main() {
-    let ccc = Test_ReadMe01()
+    let ccc = Test_FeatureApi01()
     ccc.execute()
     ccc.printResult()
     0
 }
 @Test
-public class Test_ReadMe01 {
+public class Test_FeatureApi01 {
     @TestCase
-    public func testReadMe01(): Unit {
+    public func testFeatureApi01(): Unit {
 		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
 		@Assert(patch.getDeltas().isEmpty(),false)
 		@Assert(patch.getDeltas().size,1)
