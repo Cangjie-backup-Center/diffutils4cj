@@ -140,7 +140,7 @@ public class UnifiedTest {
         while (i < revLines.size) {
             var l1 = revLines.get(i).getOrThrow()
             var l2 = patchedLines.get(i).getOrThrow()
-            if (!l1.equals(l2)) {
+            if (!(l1 == l2)) {
                 println("Line ${(i + 1)}" + " of the patched file did not match the revised original")
             }
             i++

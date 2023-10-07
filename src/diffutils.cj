@@ -139,8 +139,8 @@ public class DiffUtils {
             for (raw_line in rawChunk) {
                 tag = raw_line[0]
                 rest = raw_line[1]
-                if (tag.equals(" ") || tag.equals("-")) { oldChunkLines.append(rest) }
-                if (tag.equals(" ") || tag.equals("+")) { newChunkLines.append(rest) }
+                if (tag == (" ") || tag == ("-")) { oldChunkLines.append(rest) }
+                if (tag == (" ") || tag == ("+")) { newChunkLines.append(rest) }
             }
             patch.addDelta(ChangeDelta<String>(Chunk<String>(old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1,newChunkLines)))
             rawChunk.clear()
@@ -153,9 +153,9 @@ public class DiffUtils {
         var tag: String
         var rest: String
         if (line.size > 0) {
-            tag = line.substring(0, 1)
-            rest = line.substring(1)
-           if (tag.equals(" ") || tag.equals("+") || tag.equals("-")) { rawChunk.append([tag, rest]) }
+            tag = line[..1]
+            rest = line[1..]
+           if (tag == (" ") || tag == ("+") || tag == ("-")) { rawChunk.append([tag, rest]) }
         } else { 
             rawChunk.append([" ", ""])
         }
@@ -170,8 +170,8 @@ public class DiffUtils {
         for (raw_line in rawChunk) {
             tag = raw_line[0]
             rest = raw_line[1]
-            if (tag.equals(" ") || tag.equals("-")) { oldChunkLines.append(rest) }
-            if (tag.equals(" ") || tag.equals("+")) { newChunkLines.append(rest) }
+            if (tag == (" ") || tag == ("-")) { oldChunkLines.append(rest) }
+            if (tag == (" ") || tag == ("+")) { newChunkLines.append(rest) }
         }
         patch.addDelta(ChangeDelta<String>(Chunk<String>( old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1, newChunkLines)))
         rawChunk.clear()

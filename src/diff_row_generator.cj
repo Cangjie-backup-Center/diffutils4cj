@@ -169,12 +169,12 @@ public class DiffRowGenerator {
         var rev = delta.getRevised().getLines()
         var origList = ArrayList<String>()
         
-        for (character in join(orig, "\n").toCharArray()) {
-            origList.append(character.toString())
+        for (character in join(orig, "\n")) {
+            origList.append(Char(character).toString())
         }
         var revList = ArrayList<String>()
-        for (character in join(rev, "\n").toCharArray()) {
-            revList.append(character.toString())
+        for (character in join(rev, "\n")) {
+            revList.append(Char(character).toString())
         }
         var inlineDeltas: ArrayList<Delta<String>> = DiffUtils.diff(origList, revList).getDeltas()
         if (inlineDeltas.size < 3) {
@@ -227,8 +227,7 @@ public class DiffRowGenerator {
         }
         tagBuilder.append(">")
         var startTag = tagBuilder.toString()
-        let r: Range<Int64> = 0..tagBuilder.size
-        tagBuilder.remove(r)
+        tagBuilder.reset()
 
         tagBuilder.append("</")
         tagBuilder.append(tag)
@@ -262,8 +261,7 @@ public class DiffRowGenerator {
         tagBuilder.append(">")
         var startTag = tagBuilder.toString()
 
-         let r: Range<Int64> = 0..tagBuilder.size
-        tagBuilder.remove(r)
+        tagBuilder.reset()
 
         tagBuilder.append("</")
         tagBuilder.append(tag)
@@ -293,7 +291,8 @@ public class DiffRowGenerator {
         while (true) {
             match(iter.next()) {
                 case None => break
-                case Some(v) => buffer.append(delimiter).append(v)
+                case Some(v) => buffer.append(delimiter)
+                buffer.append(v)
             }
         }
         return buffer.toString()
@@ -322,7 +321,7 @@ class Stringequalizer <: Equalizer<String> {
             a = original.trimAscii().replace("\\s+", " ")
             b = revised.trimAscii().replace("\\s+", " ")
         }
-        return a.equals(b)
+        return a == b
     }
 }
 

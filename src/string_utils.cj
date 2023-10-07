@@ -25,7 +25,8 @@ public class StringUtills {
         while (true) {
             match(iter.next()) {
                 case None => break
-                case Some(v) => buffer.append(delimiter).append(v)
+                case Some(v) => buffer.append(delimiter)
+                buffer.append(v)
             }
         }
         return buffer.toString()
@@ -116,7 +117,7 @@ public class StringUtills {
         var widthIndex: Int64 = columnWidth
         var count: Int64 = 0
         while (lenght > widthIndex ) {
-            res = res.substring(0, widthIndex + delimiter * count) + "<br>" + res.substring(widthIndex + delimiter * count)
+            res = res[0..widthIndex + delimiter * count] + "<br>" + res[widthIndex + delimiter * count..]
             widthIndex += columnWidth
             count++
         }
