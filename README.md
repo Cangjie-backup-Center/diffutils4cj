@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.39.7-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.39.8-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-93.3%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -75,8 +75,8 @@
 描述具体的编译过程：
 
 ```shell
-cpm update
-cpm build
+cjpm update
+cjpm build
 ```
 
 ### 功能示例
@@ -89,34 +89,35 @@ cpm build
 ```cangjie
 from diffUtils4cj import diffUtils4cj.*
 from std import collection.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
-main(): Int64 {
-    var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
-    if (patch.getDeltas().isEmpty()) {
-        return 1
+main() {
+    let ccc = Test_ReadMe01()
+    ccc.execute()
+    ccc.printResult()
+    0
+}
+@Test
+public class Test_ReadMe01 {
+    @TestCase
+    public func testReadMe01(): Unit {
+		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+		@Assert(patch.getDeltas().isEmpty(),false)
+		@Assert(patch.getDeltas().size,1)
+
+		var  delta = patch.getDeltas().get(0).getOrThrow()
+		@Assert(delta is InsertDelta<String>, true)
+        @Assert(delta.getOriginal().getLines().isEmpty(), true)
+        @Assert(delta.getRevised().getLines().toArray().toString(), "[jjj, kkk]")
     }
-    if (1 != patch.getDeltas().size) {
-        return 1
-    }
-    var  delta = patch.getDeltas().get(0).getOrThrow()
-    if (!(delta is InsertDelta<String>)) {
-        return 1
-    }
-    if(!delta.getOriginal().getLines().isEmpty()) {
-        return 1
-    }
-    if(delta.getRevised().getLines().getRawArray() != ["jjj", "kkk"]) {
-        return 1
-    }
-    println("pass")
-    return 0
 }
 ```
 
 执行结果如下：
 
 ```shell
-pass
+[ PASSED ] CASE: testReadMe01
 ```
 
 #### 提供添加和打包补丁的功能
@@ -126,24 +127,32 @@ pass
 ```cangjie
 from diffUtils4cj import diffUtils4cj.*
 from std import collection.*
+from std import unittest.*
+from std import unittest.testmacro.*
 
-main(): Int64 {
-    var rev = ArrayList<String>("hhh", "jjj", "kkk")
-    var orig= ArrayList<String>()
-    var patch:  Patch<String>= DiffUtils.diff(rev, orig)
-    var res = DiffUtils.patch(rev,patch)
-    if (res == orig) {
-    println("pass")
-        return 0
+main() {
+    let ccc = Test_ReadMe02()
+    ccc.execute()
+    ccc.printResult()
+    0
+}
+@Test
+public class Test_ReadMe02 {
+    @TestCase
+    public func testReadMe02(): Unit {
+		var rev = ArrayList<String>("hhh", "jjj", "kkk")
+		var orig= ArrayList<String>()
+		var patch:  Patch<String>= DiffUtils.diff(rev, orig)
+		var res = DiffUtils.patch(rev,patch)
+        @Assert(res == orig, true)
     }
-    return 1
 }
 ```
 
 执行结果如下：
 
 ```shell
-pass
+[ PASSED ] CASE: testReadMe02
 ```
 
 #### 固定格式显示两组字符串的差异
@@ -151,38 +160,40 @@ pass
 示例代码如下：
 
 ```cangjie
-main(): Int64 {
-    var first = "anything \n \nother\nmore lines";
-    var second ="anything\n\nother\nsome more lines";
-    var generator = Builder()
-         .ignoreWhiteSpaces(true)
-         .columnWidth(Int64.Max) // do not wrap
-         .build();
-    var rows = generator.generateDiffRows(split(first), split(second))
-    if(4 != rows.size) {
-         return 1
+from diffUtils4cj import diffUtils4cj.*
+from std import collection.*
+from std import math.*
+from std import unittest.*
+from std import unittest.testmacro.*
+
+main() {
+    let ccc = Test_ReadMe03()
+    ccc.execute()
+    ccc.printResult()
+    0
+}
+@Test
+public class Test_ReadMe03 {
+    @TestCase
+    public func testReadMe01(): Unit {
+		var first = "anything \n \nother\nmore lines";
+		var second ="anything\n\nother\nsome more lines"
+		var generator = Builder().ignoreWhiteSpaces(true).columnWidth(Int64.Max).build()
+		var rows = generator.generateDiffRows(ArrayList<String>(first.split('\n')), ArrayList<String>(second.split('\n')))
+		
+		@Assert(rows.size,4)
+		@Assert(rows.get(0).getOrThrow().getTag().toString(),"EQUAL")
+		@Assert(rows.get(1).getOrThrow().getTag().toString(),"EQUAL")
+        @Assert(rows.get(2).getOrThrow().getTag().toString(),"EQUAL")
+        @Assert(rows.get(3).getOrThrow().getTag().toString(),"CHANGE")
     }
-    if(rows.get(0).getOrThrow().getTag().toString() != "EQUAL") {
-         retutn 1
-    }
-    if(rows.get(1).getOrThrow().getTag().toString() != "EQUAL") {
-         retutn 1
-    }
-    if(rows.get(2).getOrThrow().getTag().toString() != "EQUAL") {
-         retutn 1
-    }
-    if(rows.get(3).getOrThrow().getTag().toString() != "CHANGE") {
-         retutn 1
-    }
-    println("pass")
-    return 0
 }
 ```
 
 执行结果如下：
 
 ```shell
-pass
+[ PASSED ] CASE: testReadMe03
 ```
 
 ## 参与贡献
