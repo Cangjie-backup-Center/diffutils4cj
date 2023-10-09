@@ -49,6 +49,8 @@
 │   └── path_node.cj
 │   └── snake.cj
 └── test
+│   ├── DOC
+│   ├── FUZZ
 │   ├── HLT
 │   └── LLT
 ├── CHANGELOG.md
@@ -61,7 +63,7 @@
 
 - `doc`  文档目录，用于存API接口文档
 - `src`  是库源码目录
-- `test` 存放 HLT 测试用例、LLT 自测用例
+- `test` 存放 HLT 测试用例、LLT 自测用例、FUZZ 测试用例和文档示例用例
 
 ### 接口说明
 
@@ -72,7 +74,18 @@
 
 ### 编译构建
 
-描述具体的编译过程：
+#### Linux 环境编译
+
+编译描述和具体shell命令
+
+```shell
+cjpm update
+cjpm build
+```
+
+#### Window 环境编译
+
+编译描述和具体cmd命令
 
 ```shell
 cjpm update
