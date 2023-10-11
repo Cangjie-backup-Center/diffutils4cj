@@ -217,8 +217,8 @@ public class Chunk<T> where T <: Equal<T> & ToString {
      */
     public func toString(): String
 
-    	/*
-     * 验证差异相对目标列表是否合法
+    /*
+     * 验证差异相对目标列表是否合法，即差异位置不大于目标列表长度，且不小于0, 不合法则抛 PatchFailedException 异常
      * 参数 target - 目标列表
      */
     public func verify(target: ArrayList<T>): Unit
@@ -256,7 +256,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString {
     public init(equalizer: Equalizer<T>)
     
     /*
-     * 对比两个Array的差异
+     * 对比两个Array的差异，对比失败则抛 DiffException 异常
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
      * 返回值 Patch<T>- 返回差异对象
@@ -264,7 +264,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString {
     public func diff(original: Array<T>, revised: Array<T>): Patch<T>
     
     /*
-     * 对比两个ArrayList的差异
+     * 对比两个ArrayList的差异, 对比失败则抛 DiffException 异常
      * 参数 original - 要处理的原数据
      * 参数 revised - 要对比的修订数据
      * 返回值 Patch<T> 返回差异对象
@@ -272,7 +272,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString {
     public func diff(original: ArrayList<T>, revised: ArrayList<T>): Patch<T>
     
     /*
-     * 构建一个表示原始文本和修订文本之间的最短编辑路径的PathNode对象
+     * 构建一个表示原始文本和修订文本之间的最短编辑路径的PathNode对象，构建失败则抛 DifferentiationFailedException 异常
      * 参数 original - 原始文本
      * 参数 revised - 修订文本
      * 返回值 PathNode - PathNode对象
@@ -311,7 +311,7 @@ public abstract class PathNode {
     public func isBootstrap(): Bool
     
     /*
-     * 跳过一系列的DiffNodes，直到找到一个Snake或bootstrap节点，或者到达路径的末尾
+     * 遍历查询最近的 Snake 节点，找到了，返回该节点，找不到返回 None
      * 返回值 Option<PathNode> - 返回一个节点
      */
     public func previousSnake(): Option<PathNode>
@@ -516,7 +516,7 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString{
      public func restore(target: ArrayList<T>): Unit
 
     /*
-     * 验证差异相对目标列表是否合法
+     * 验证差异相对目标列表是否合法，即差异位置不大于目标列表长度，且不小于0, 不合法则抛 PatchFailedException 异常
      * 参数 target - 目标列表
      */
      public func verify(target: ArrayList<T>): Unit
@@ -542,7 +542,7 @@ public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
      public func restore(target: ArrayList<T>): Unit
 
     /*
-     * 验证差异相对目标列表是否合法
+     * 验证差异相对目标列表是否合法，即差异位置不大于目标列表长度，且不小于0, 不合法则抛 PatchFailedException 异常
      * 参数 target - 目标列表
      */
      public func verify(target: ArrayList<T>): Unit
@@ -568,7 +568,7 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString {
      public func restore(target: ArrayList<T>): Unit
 
     /*
-     * 验证差异相对目标列表是否合法
+     * 验证差异相对目标列表是否合法，即差异位置不大于目标列表长度，且不小于0, 不合法则抛 PatchFailedException 异常
      * 参数 target - 目标列表
      */
      public func verify(target: ArrayList<T>): Unit
