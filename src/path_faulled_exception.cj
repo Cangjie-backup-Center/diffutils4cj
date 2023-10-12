@@ -14,4 +14,8 @@ public class PatchFailedException <: DiffException {
     public init(msg: String) {
         super(msg)
     }
+
+    public func toString(): String {
+        return "PatchFailedException: " + message
+    }
 }

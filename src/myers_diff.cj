@@ -158,7 +158,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
         }
         while (!checkNull(temppath) && !checkNull(temppath.getOrThrow().prev) && temppath.getOrThrow().prev.getOrThrow().j >= 0) {
             if (temppath.getOrThrow().isSnake()) {
-                throw Exception("bad diffpath: found snake when looking for diff")
+                throw DifferentiationFailedException("bad diffpath: found snake when looking for diff")
             }
             var i = temppath.getOrThrow().i
             var j = temppath.getOrThrow().j

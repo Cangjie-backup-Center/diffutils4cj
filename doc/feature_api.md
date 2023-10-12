@@ -280,7 +280,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString {
     public func buildPath(orig:  ArrayList<T>, rev:  ArrayList<T>): PathNode
     
     /*
-     * 根据一个差异路径构建一个Patch对象
+     * 根据一个差异路径构建一个Patch对象, 构建失败则抛 DifferentiationFailedException 异常
      * 参数 path - PathNode对象
      * 参数 orig - 原始文本的元素列表
      * 参数 rev - 修订文本的元素列表
@@ -374,6 +374,12 @@ public open class DiffException <: Exception {
      * 参数 msg - 异常信息
      */
      public init(msg: String)
+
+    /*
+     * 返回异常信息。
+     * 返回值 String - 返回异常信息字符串
+     */
+     public func toString(): String
 }
 
 public class DifferentiationFailedException <: DiffException {
@@ -382,6 +388,12 @@ public class DifferentiationFailedException <: DiffException {
      * 参数 msg - 异常信息
      */
      public init(msg: String)
+
+    /*
+     * 返回异常信息。
+     * 返回值 String - 返回异常信息字符串
+     */
+     public func toString(): String
 }
 
 public class PatchFailedException <: DiffException {
@@ -395,6 +407,12 @@ public class PatchFailedException <: DiffException {
      * 参数 msg - 异常信息
      */
      public init(msg: String)
+
+    /*
+     * 返回异常信息。
+     * 返回值 String - 返回异常信息字符串
+     */
+     public func toString(): String
 }
 ```
 
