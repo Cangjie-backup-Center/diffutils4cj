@@ -92,6 +92,53 @@ cjpm update
 cjpm build
 ```
 
+### 执行用例
+编译用例并执行，步骤如下：
+
+#### 1. 进入 diffutils4cj/test/ 目录下创建 tmp 文件夹，然后编译测试用例
+```shell
+cd diffutils4cj/test/
+mkdir tmp
+cjc -O2 --import-path xxxxx/diffutils4cj/build/diffUtils4cj/.. -L xxxxx/diffutils4cj/build/diffUtils4cj -l diffUtils4cj_diffUtils4cj xxxxx/diffutils4cj/test/HLT/Builder/test_Builder_columnWidth_01.cj -o xxxxx/diffutils4cj/test/tmp/test.cj.out --test
+```
+
+##### 1.1 具体说明
+
+- cjc命令, -O2表示开启优化
+```shell
+cjc -O2
+```
+- --import-path 导入oauth库编译出来的库文件地址, 注意地址最后有".."
+- -L 导入库文件的完整路径
+
+```shell
+--import-path xxxxx/diffutils4cj/build/diffUtils4cj/.. -L xxxxx/diffutils4cj/build/diffUtils4cj -l diffUtils4cj_diffUtils4cj
+```
+- -l 要导入的具体的包, 用"库名_包名",一般库文件生成时是"lib库名_包名.后缀"的格式
+- 测试用例的完整路径和用例中引入文件的完整路径
+- -o 用例编译后输出的位置和名称, .out结尾, 一般使用"用例名称.out"
+- --test 用例编译命令结尾
+```shell
+xxxxx/diffutils4cj/test/HLT/Builder/test_Builder_columnWidth_01.cj -o xxxxx/diffutils4cj/test/tmp/test.cj.out --test
+```
+
+#### 2. 把编译好的文件复制到 .out 文件下(diffutils4cj/test/tmp/) 
+- 把diffutils4cj/build/diffutils4cj/目录中的文件都复制到 .out 文件位置(diffutils4cj/test/tmp/ 中)
+
+#### 3. 进入到.out文件位置，执行用例
+- 进入到.out文件位置执行用例
+```shell
+cd xxxxx/diffutils4cj/test/tmp/
+```
+- windows系统打开cmd,输入.out文件完整名称即可执行
+```shell
+test.cj.out
+```
+- Linux系统使用 ./.out文件完整名称
+```shell
+./test.cj.out
+```
+
 ### 功能示例
 #### 对比两组字符串之间的差异功能示例
 

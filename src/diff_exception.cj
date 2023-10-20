@@ -14,4 +14,8 @@ public open class DiffException <: Exception {
     public init(msg: String) {
         super(msg);
     }
+
+    public open func toString(): String {
+        return "DiffException: " + message
+    }
 }

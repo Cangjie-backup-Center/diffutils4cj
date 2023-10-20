@@ -10,4 +10,8 @@ public class DifferentiationFailedException <: DiffException {
     public init(msg: String) {
         super(msg);
     }
+
+    public func toString(): String {
+        return "DifferentiationFailedException: " + message
+    }
 }
