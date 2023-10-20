@@ -23,7 +23,7 @@ public class TestChangeDeltaV002{
         try{
             ChangeDelta.verify(target)
         }catch(e:PatchFailedException){
-            if(e.toString().contains("Incorrect Chunk: the position of chunk > target size")){
+            if(e.toString().contains("Incorrect Chunk, the position of chunk > target size")){
                 flag=0
             }
         }

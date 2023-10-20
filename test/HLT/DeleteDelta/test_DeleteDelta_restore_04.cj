@@ -22,7 +22,7 @@ public class TestDeleteDeltaV002{
         var flag=1
         try{
             deleteDelta.restore(target)
-        }catch(e:IndexOutOfBoundsException){
+        }catch(e:DiffException){
             flag=0
         }
         @Assert(flag,0)

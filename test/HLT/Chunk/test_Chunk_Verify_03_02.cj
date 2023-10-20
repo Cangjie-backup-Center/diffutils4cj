@@ -25,7 +25,7 @@ public class TestChunkB001{
         try{
             chunk01.verify(target)
         }catch(e:PatchFailedException){
-            if(e.toString().contains("Incorrect Chunk: the chunk content doesn't match the target")){
+            if(e.toString().contains("Incorrect Chunk, the chunk content doesn't match the target")){
                 flag=1
             }
         }
@@ -34,7 +34,7 @@ public class TestChunkB001{
         try{
             chunk02.verify(target)
         }catch(e:PatchFailedException){
-            if(e.toString().contains("Incorrect Chunk: the chunk content doesn't match the target")){
+            if(e.toString().contains("Incorrect Chunk, the chunk content doesn't match the target")){
                 flag=1
             }
         }

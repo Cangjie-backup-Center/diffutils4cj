@@ -24,7 +24,7 @@ public class TestInsertDeltaV002{
         try{
             insertDelta.applyTo(target)
         }catch(e:PatchFailedException){
-            if(e.toString().contains("Incorrect patch for delta: delta original position > target size")){
+            if(e.toString().contains("Incorrect patch for delta, delta original position > target size")){
                 flag=0
             }
         }

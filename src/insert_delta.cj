@@ -61,9 +61,13 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString{
         var position: Int64 = getRevised().getPosition()
         var size: Int64 = getRevised().size()
         var i: Int64 = 0
-        while (i < size) {
-            target.remove(position)
-            i++
+        try {
+            while (i < size) {
+                target.remove(position)
+                i++
+            }
+        } catch(e: IndexOutOfBoundsException) {
+            throw DiffException("the position of chunk < 0")
         }
     }
 
@@ -76,7 +80,7 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString{
      */
     public func verify(target: ArrayList<T>): Unit {
         if (getOriginal().getPosition() > target.size) {
-            throw PatchFailedException("Incorrect patch for delta: " + "delta original position > target size");
+            throw PatchFailedException("Incorrect patch for delta, " + "delta original position > target size");
         }
     }
 

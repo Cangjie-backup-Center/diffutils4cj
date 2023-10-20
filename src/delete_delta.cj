@@ -61,9 +61,13 @@ public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
         var position: Int64 = getRevised().getPosition()
         var lines: ArrayList<T> = this.getOriginal().getLines()
         var i: Int64 = 0
-        while (i < lines.size) {
-            target.insert(position + i, lines.get(i).getOrThrow())
-            i++
+        try {
+            while (i < lines.size) {
+                target.insert(position + i, lines.get(i).getOrThrow())
+                i++
+            }
+        } catch(e: IndexOutOfBoundsException) {
+            throw DiffException("the position of chunk < 0")
         }
     }
 
