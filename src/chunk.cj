@@ -142,13 +142,13 @@ public class Chunk<T> where T <: Equal<T> & ToString {
      */
     public func verify(target: ArrayList<T>): Unit{
         if (last() > target.size) {
-            throw PatchFailedException("Incorrect Chunk: the position of chunk > target size");
+            throw PatchFailedException("Incorrect Chunk, the position of chunk > target size");
         }
         var i = 0
         while (i < size()) {
             if (!(target.get(position + i).getOrThrow()==(lines.get(i).getOrThrow()))) {
                 throw PatchFailedException(
-                        "Incorrect Chunk: the chunk content doesn't match the target");
+                        "Incorrect Chunk, the chunk content doesn't match the target");
             }
             i++
         }

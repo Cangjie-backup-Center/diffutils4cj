@@ -67,22 +67,26 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
         var position: Int64 = getRevised().getPosition()
         var size: Int64 = getRevised().size()
         var i: Int64 = 0
-        while (i < size) {
-            if (position < target.size) {
-                target.remove(position)
-            } else {
-                break
+        try {
+            while (i < size) {
+                if (position < target.size) {
+                    target.remove(position)
+                } else {
+                    break
+                }
+                i++
             }
-            i++
-        }
-        i = 0
-        for (line in getOriginal().getLines()) {
-            if ((position + i) == target.size) {
-                target.append(line)
-            } else {
-                target.insert(position + i, line)
+            i = 0
+            for (line in getOriginal().getLines()) {
+                if ((position + i) == target.size) {
+                    target.append(line)
+                } else {
+                    target.insert(position + i, line)
+                }
+                i++
             }
-            i++
+        } catch(e: IndexOutOfBoundsException) {
+            throw DiffException("the position of chunk < 0")
         }
     }
 
@@ -96,7 +100,7 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
     public func verify(target: ArrayList<T>): Unit {
         getOriginal().verify(target)
         if (getOriginal().getPosition() > target.size) {
-            throw PatchFailedException("Incorrect patch for delta: " + "delta original position > target size")
+            throw PatchFailedException("Incorrect patch for delta, " + "delta original position > target size")
         }
     }
 

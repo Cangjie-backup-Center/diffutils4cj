@@ -522,13 +522,13 @@ public abstract class Delta<T> where T <: Equal<T> & ToString{
 
 public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString{
     /*
-     * 把当前 Delta 差异应用到文本
+     * 把当前 Delta 差异应用到文本，chunk 的 position > target size 时抛 PatchFailedException
      * 参数 target - 要应用的文本
      */
      public func applyTo(target: ArrayList<T>): Unit
 
     /*
-     * 使用当前 Delta 差异还原到文本
+     * 使用当前 Delta 差异还原到文本, chunk 的 position < 0 时抛 DiffException
      * 参数 target - 要还原的文本
      */
      public func restore(target: ArrayList<T>): Unit
@@ -548,13 +548,13 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString{
 
 public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
     /*
-     * 把当前 Delta 差异应用到文本
+     * 把当前 Delta 差异应用到文本, chunk 的 position > target size 时抛 PatchFailedException
      * 参数 target - 要应用的文本
      */
      public func applyTo(target: ArrayList<T>): Unit
 
     /*
-     * 使用当前 Delta 差异还原到文本
+     * 使用当前 Delta 差异还原到文本, chunk 的 position < 0 时抛 DiffException
      * 参数 target - 要还原的文本
      */
      public func restore(target: ArrayList<T>): Unit
@@ -574,13 +574,13 @@ public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
 
 public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString {
     /*
-     * 把当前 Delta 差异应用到文本
+     * 把当前 Delta 差异应用到文本，chunk 的 position > target size 时抛 PatchFailedException
      * 参数 target - 要应用的文本
      */
      public func applyTo(target: ArrayList<T>): Unit
 
     /*
-     * 使用当前 Delta 差异还原到文本
+     * 使用当前 Delta 差异还原到文本, chunk 的 position < 0 时抛 DiffException
      * 参数 target - 要还原的文本
      */
      public func restore(target: ArrayList<T>): Unit

@@ -27,7 +27,7 @@ public class TestMyersDiffB001{
             myersDiff01.buildRevision(snake03,orig,rev)
         }catch(e:Exception){
             println(e.toString())
-            if(e.toString().contains("bad diffpath: found snake when looking for diff")){
+            if(e.toString().contains("bad diffpath, found snake when looking for diff")){
                 flag=0
             }
         }
@@ -42,7 +42,7 @@ public class TestMyersDiffB001{
             myersDiff02.buildRevision(snake03,orig,rev)
         }catch(e:Exception){
             println(e.toString())
-            if(e.toString().contains("bad diffpath: found snake when looking for diff")){
+            if(e.toString().contains("bad diffpath, found snake when looking for diff")){
                 flag=0
             }
         }
