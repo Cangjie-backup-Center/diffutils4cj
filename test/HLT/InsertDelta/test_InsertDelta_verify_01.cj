@@ -24,11 +24,11 @@ public class TestInsertDeltaV002{
         try{
             insertDelta.verify(target)
         }catch(e:PatchFailedException){
-            if(e.toString().contains("Incorrect patch for delta, delta original position > target size")){
+
+            if(e.toString().contains("PatchFailedException: Incorrect patch for delta, delta original position > target size")){
                 flag=0
             }
         }
         @Assert(flag,0)
-
     }
 }

@@ -23,7 +23,9 @@ public class TestDeleteDeltaV002{
         try{
             deleteDelta.restore(target)
         }catch(e:DiffException){
-            flag=0
+            if(e.toString().contains("DiffException: the position of chunk < 0")){
+                flag=0
+            }
         }
         @Assert(flag,0)
     }

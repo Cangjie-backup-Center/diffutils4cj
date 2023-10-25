@@ -25,9 +25,9 @@ public class TestMyersDiffB001{
         var flag=1
         try{
             myersDiff01.buildRevision(snake03,orig,rev)
-        }catch(e:Exception){
-            println(e.toString())
-            if(e.toString().contains("bad diffpath, found snake when looking for diff")){
+        }catch(e:DifferentiationFailedException){
+
+            if(e.toString().contains("DifferentiationFailedException: bad diffpath, found snake when looking for diff")){
                 flag=0
             }
         }
@@ -40,9 +40,9 @@ public class TestMyersDiffB001{
         var flag=1
         try{
             myersDiff02.buildRevision(snake03,orig,rev)
-        }catch(e:Exception){
-            println(e.toString())
-            if(e.toString().contains("bad diffpath, found snake when looking for diff")){
+        }catch(e:DifferentiationFailedException){
+
+            if(e.toString().contains("DifferentiationFailedException: bad diffpath, found snake when looking for diff")){
                 flag=0
             }
         }
