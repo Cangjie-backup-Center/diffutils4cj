@@ -24,6 +24,7 @@ public class TestInsertDeltaV002{
         try{
             insertDelta.applyTo(target)
         }catch(e:IndexOutOfBoundsException){
+
             flag=0
         }
         @Assert(flag,0)

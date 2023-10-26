@@ -19,8 +19,8 @@ public class TestChunkB001{
         var target=ArrayList<Char>(Array<Char>(250,item:'c'))
         var lines_arrlist=ArrayList<Char>(Array<Char>(100,item:'c'))
         var lines_arr=Array<Char>(100,item:'c')
-        var chunk01=Chunk(123,lines_arrlist)//last()=224,size=100
-        var chunk02=Chunk(123,lines_arr)//last()=224,size=100
+        var chunk01=Chunk(123,lines_arrlist)
+        var chunk02=Chunk(123,lines_arr)
         var flag=0
         try{
             chunk01.verify(target)
@@ -29,7 +29,7 @@ public class TestChunkB001{
         }
         @Assert(flag,0)
         try{
-            chunk01.verify(target)
+            chunk02.verify(target)
         }catch(e:PatchFailedException){
            flag=1
         }

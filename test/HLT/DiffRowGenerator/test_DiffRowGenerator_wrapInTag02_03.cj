@@ -23,6 +23,7 @@ public class TestDiffRowGenerator{
         try{
             DiffRowGenerator.wrapInTag(sequence,startPosition,endPosition,tag,cssClass)
         }catch(e:IndexOutOfBoundsException){
+
             re_wrapInTag_flag=1
         }
         @Assert(re_wrapInTag_flag,1)

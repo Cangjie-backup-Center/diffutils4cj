@@ -18,7 +18,6 @@ public class TestDiffUtilsV002{
         let patch=DiffUtils.parseUnifiedDiff(diff)
         let deltas=patch.getDeltas()
         @Assert(deltas.size,0)
-
     }
     @TestCase
     func testDiffUtilsParseUnifiedDiff02(): Unit {

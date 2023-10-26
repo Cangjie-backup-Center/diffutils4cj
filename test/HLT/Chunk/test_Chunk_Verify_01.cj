@@ -23,7 +23,16 @@ public class TestChunkB001{
         try{
             chunk01.verify(target)
         }catch(e:PatchFailedException){
-            if(e.toString().contains("Incorrect Chunk, the position of chunk > target size")){
+            if(e.toString().contains("PatchFailedException: Incorrect Chunk, the position of chunk > target size")){
+                flag=1
+            }
+        }
+        @Assert(flag,1)
+        flag=0
+        try{
+            chunk02.verify(target)
+        }catch(e:PatchFailedException){
+            if(e.toString().contains("PatchFailedException: Incorrect Chunk, the position of chunk > target size")){
                 flag=1
             }
         }

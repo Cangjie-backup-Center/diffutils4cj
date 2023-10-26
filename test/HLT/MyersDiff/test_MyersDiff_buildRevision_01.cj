@@ -25,6 +25,7 @@ public class TestMyersDiffB001{
         try{
             myersDiff01.buildRevision(diffNode01,orig,rev)
         }catch(e:IndexOutOfBoundsException){
+
             flag=0
         }
         @Assert(flag,0)
@@ -37,6 +38,7 @@ public class TestMyersDiffB001{
         try{
             myersDiff02.buildRevision(diffNode01,orig,rev)
         }catch(e:IndexOutOfBoundsException){
+
             flag=0
         }
         @Assert(flag,0)
