@@ -908,7 +908,7 @@ public class Test_FeatureApi03 {
 		var first = "anything \n \nother\nmore lines"
 		var second ="anything\n\nother\nsome more lines"
 		var generator = Builder().ignoreWhiteSpaces(true).columnWidth(Int64.Max).build()
-		var rows = generator.generateDiffRows(ArrayList<String>(first.split('\n')), ArrayList<String>(second.split('\n')))
+		var rows = generator.generateDiffRows(ArrayList<String>(first.split("\n")), ArrayList<String>(second.split("\n")))
 			
 		@Assert(rows.size,4)
 		@Assert(rows.get(0).getOrThrow().getTag().toString(),"EQUAL")

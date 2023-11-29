@@ -1,4 +1,4 @@
-// 3rd_party_lib:diffutils4cj/build/diffUtils4cj
+// 3rd_party_lib:diffutils4cj/build/release/diffUtils4cj
 
 from fuzz import fuzz.*
 from diffUtils4cj import diffUtils4cj.*
