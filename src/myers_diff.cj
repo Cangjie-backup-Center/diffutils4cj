@@ -69,13 +69,11 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
     }
 
     /**
-     * Computes the minimum diffpath that expresses de differences
-     * between the original and revised sequences, according
-     * to Gene Myers differencing algorithm.
+     * buildPath
      *
-     * @param orig The original sequence.
-     * @param rev The revised sequence.
-     * @return A minimum {@link PathNode Path} accross the differences graph.
+     * @param orig original text.
+     * @param rev revised text.
+     * @return PathNode
      *   
      * @since 0.38.2
      */
@@ -98,32 +96,32 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
                 let kminus: Int64 = kmiddle - 1
                 var prev: Option<PathNode> = Option<PathNode>.None
 
-                var i: Int64
-                if ((k == -d) || (k != d && diagonal[kminus].i < diagonal[kplus].i)) {
-                    i = diagonal[kplus].i
+                var ii: Int64
+                if ( (k == -d) || (k != d && diagonal[kminus].i < diagonal[kplus].i) ) {
+                    ii = diagonal[kplus].i
                     prev = diagonal[kplus]
                 } else {
-                    i = diagonal[kminus].i + 1
+                    ii = diagonal[kminus].i + 1
                     prev = diagonal[kminus]
                 }
 
                 diagonal[kminus] = Snake(0, 0, Option<PathNode>.None) // no longer used
 
-                var j = i - k
+                var j = ii - k
 
-                var node: PathNode = DiffNode(i, j, prev)
+                var node: PathNode = DiffNode(ii, j, prev)
 
-                while (i < N && j < M && equals(orig.get(i).getOrThrow(), rev.get(j).getOrThrow())) {
-                    i++
+                while (ii < N && j < M && equals(orig.get(ii).getOrThrow(), rev.get(j).getOrThrow())) {
+                    ii++
                     j++
                 }
-                if (i > node.i) {
-                    node =  Snake(i, j, node)
+                if (ii > node.i) {
+                    node =  Snake(ii, j, node)
                 }
 
                 diagonal[kmiddle] = node
 
-                if (i >= N && j >= M) {
+                if (ii >= N && j >= M) {
                     return diagonal[kmiddle]
                 }
 
@@ -141,12 +139,12 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
     }
 
     /**
-     * Constructs a {@link Patch} from a difference path.
+     * buildRevision
      *
-     * @param path The path.
-     * @param orig The original sequence.
-     * @param rev The revised sequence.
-     * @return A {@link Patch} script corresponding to the path.
+     * @param path
+     * @param orig original arraylist
+     * @param rev revised arraylist
+     * @return A path
      *
      * @since 0.38.2
      */
