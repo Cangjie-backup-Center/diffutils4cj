@@ -29,7 +29,7 @@ public class Patch<T> where T <: Equal<T> & ToString {
      * @since 0.38.2
      */
     public func getDeltas(): ArrayList<Delta<T>> {
-        deltas.sortBy(DeltaComparator<T>.INSTANCE.deltaComparator, stable: false)
+        deltas.sortBy(stable: false, comparator: DeltaComparator<T>.INSTANCE.deltaComparator)
         return deltas
     }
 
