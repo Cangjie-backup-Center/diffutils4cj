@@ -12,5 +12,4 @@ module-lock.json
 *.macrocall
 target/
 cjpm.lock
-cjpm.toml
 .cache/
