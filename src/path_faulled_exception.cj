@@ -4,9 +4,7 @@
 
 package diffUtils4cj
 
-public class PatchFailedException <: DiffException {
-    private static var serialVersionUID: Int64 = 1
-    
+public class PatchFailedException <: DiffException {    
     public init() {
         super("")
     }

@@ -8,7 +8,6 @@ package diffUtils4cj
  * Delta Comparator.
  */
 public class DeltaComparator<T> where T <: Equal<T> & ToString {
-    private static let serialVersionUID: Int64 = 1
     public static let  INSTANCE = DeltaComparator<T>()
 
     public init() {
