@@ -5,8 +5,6 @@
 package diffUtils4cj
 
 public class DifferentiationFailedException <: DiffException {
-    private static let serialVersionUID: Int64 = 1
-
     public init(msg: String) {
         super(msg);
     }

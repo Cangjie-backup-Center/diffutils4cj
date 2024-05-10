@@ -7,10 +7,7 @@ package diffUtils4cj
 /**
  * Base class for all exceptions emanating from this package.
  */
-public open class DiffException <: Exception {
-    
-    private static let  serialVersionUID: Int64 = 1
-    
+public open class DiffException <: Exception {    
     public init(msg: String) {
         super(msg);
     }
