@@ -54,7 +54,6 @@
 │   ├── HLT
 │   └── LLT
 ├── CHANGELOG.md
-├── gitee_gate.cfg
 ├── LICENSE.txt
 ├── module.json
 ├── README.md

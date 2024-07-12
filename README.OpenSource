@@ -1,11 +1,11 @@
 [
     {
-        "Name": " diffutils",
+        "Name": " java-diff-utils",
         "License": " Apache License ",
         "License File": " LICENSE ",
-        "Version Number": " v2.0 ",
+        "Version Number": " v1.3.0 ",
         "Owner": ""
-        "Upstream URL": "https://code.google.com/archive/p/java-diff-utils",
+        "Upstream URL": "https://storage.googleapis.com/google-code-archive-source/v2/code.google.com/java-diff-utils/source-archive.zip",
         "Description": "The DiffUtils library for computing diffs, applying patches,"
     }
 ]
