@@ -1,8 +1,10 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 
 package diffUtils4cj
+
+import std.collection.*
 
 public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
     

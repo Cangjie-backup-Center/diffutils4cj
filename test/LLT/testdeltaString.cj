@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import diffUtils4cj.*
+import std.collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let patchTest = deltaTest()

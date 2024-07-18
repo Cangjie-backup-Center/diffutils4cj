@@ -1,8 +1,8 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
+import diffUtils4cj.*
+import std.collection.*
 
 main(): Int64 {
     var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>(), ArrayList<String>("aaa"))

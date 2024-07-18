@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import diffUtils4cj.*
+import std.collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let chcnkTest = chcnkTest()
@@ -20,11 +20,11 @@ main(): Int64 {
 public class chcnkTest {
     @TestCase
     public func chcnkTest01(): Unit {
-        var chunk: Chunk<Char> = Chunk<Char>(122, ['q','c','e'])
-        chunk.setLines(ArrayList<Char>(['q','c','e']))
+        var chunk: Chunk<Rune> = Chunk<Rune>(122, [r'q',r'c',r'e'])
+        chunk.setLines(ArrayList<Rune>([r'q',r'c',r'e']))
         var res = 1
         unsafe {
-            if (chunk.getLines().getRawArray() ==  ['q','c','e']) {
+            if (chunk.getLines().getRawArray() ==  [r'q',r'c',r'e']) {
                 res =  0
             }
         }
@@ -33,8 +33,8 @@ public class chcnkTest {
 
     @TestCase
     public func chcnkTest02(): Unit {
-        var chunk: Chunk<Char> = Chunk<Char>(87897, ['a','c','e'])
-        chunk.setLines(ArrayList<Char>(['g','c','e']))
+        var chunk: Chunk<Rune> = Chunk<Rune>(87897, [r'a',r'c',r'e'])
+        chunk.setLines(ArrayList<Rune>([r'g',r'c',r'e']))
         var res = 1
         unsafe {
             if (chunk.getPosition() ==  87897) {

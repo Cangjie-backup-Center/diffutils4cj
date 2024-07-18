@@ -1,8 +1,8 @@
 // 3rd_party_lib:diffutils4cj/build/release/diffUtils4cj
 
-from fuzz import fuzz.*
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
+import fuzz.fuzz.*
+import diffUtils4cj.*
+import std.collection.*
 
 public func fuzzFunc_StringUtills_join(dp:DataProvider):Int32 {
     try{
