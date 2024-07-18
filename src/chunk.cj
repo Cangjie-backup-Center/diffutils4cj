@@ -1,8 +1,10 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 
 package diffUtils4cj
+
+import std.collection.*
 
 /**
  * Holds the information about the part of text involved in the diff process

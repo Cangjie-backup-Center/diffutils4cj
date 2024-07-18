@@ -1,10 +1,10 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 
 package diffUtils4cj
 
-from std import collection.*
+import std.collection.*
 
 
 public abstract class PathNode {

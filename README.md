@@ -3,9 +3,9 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.51.4-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.53.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-93.3%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -146,16 +146,16 @@ test.cj.out
 示例代码如下：
 
 ```cangjie
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import diffUtils4cj.*
 
 main() {
     let ccc = Test_ReadMe01()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let tester = ccc.asTestSuite()
+    let res = tester.runTests()
+    res.failedCount
 }
 @Test
 public class Test_ReadMe01 {
@@ -184,16 +184,16 @@ public class Test_ReadMe01 {
 示例代码如下：
 
 ```cangjie
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import diffUtils4cj.*
 
 main() {
-    let ccc = Test_ReadMe02()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let ccc = Test_ReadMe01()
+    let tester = ccc.asTestSuite()
+    let res = tester.runTests()
+    res.failedCount
 }
 @Test
 public class Test_ReadMe02 {
@@ -219,17 +219,17 @@ public class Test_ReadMe02 {
 示例代码如下：
 
 ```cangjie
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import math.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.math.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import diffUtils4cj.*
 
 main() {
     let ccc = Test_ReadMe03()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let tester = ccc.asTestSuite()
+    let res = tester.runTests()
+    res.failedCount
 }
 @Test
 public class Test_ReadMe03 {
@@ -254,6 +254,16 @@ public class Test_ReadMe03 {
 ```shell
 [ PASSED ] CASE: testReadMe03
 ```
+
+## 约束与限制
+
+在下述版本验证通过：
+
+    Cangjie Version: 0.53.4
+
+## 开源协议
+
+本项目基于 [Apache License 2.0](https://gitcode.com/Cangjie-TPC/diffutils4cj/blob/master/LICENSE) ，请自由的享受和参与开源。
 
 ## 参与贡献
 

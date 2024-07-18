@@ -1,9 +1,9 @@
 // 3rd_party_lib:diffutils4cj/build/release/diffUtils4cj
 // 3rd_party_lib_ohos:diffutils4cj/build/aarch64-linux-ohos/diffUtils4cj
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from diffUtils4cj import diffUtils4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import diffUtils4cj.*
 
 @Test
 public class TestDiffRow{

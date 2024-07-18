@@ -4,6 +4,8 @@
 
 package diffUtils4cj
 
+import std.collection.*
+
 /**
  * Describes the patch holding all deltas between the original and revised texts.
  */

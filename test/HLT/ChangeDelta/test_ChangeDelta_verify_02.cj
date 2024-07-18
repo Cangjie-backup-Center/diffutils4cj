@@ -1,10 +1,10 @@
 // 3rd_party_lib:diffutils4cj/build/release/diffUtils4cj
 // 3rd_party_lib_ohos:diffutils4cj/build/aarch64-linux-ohos/diffUtils4cj
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
-from diffUtils4cj import diffUtils4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import diffUtils4cj.*
 
 @Test
 public class TestChangeDeltaV002{
@@ -15,11 +15,11 @@ public class TestChangeDeltaV002{
     ***/
     @TestCase
     func testChangeDeltaVerify02(): Unit {
-        var lines_arrlist=ArrayList<Char>()
+        var lines_arrlist=ArrayList<Rune>()
         var original=Chunk(123,lines_arrlist)
         var revised=Chunk(123,lines_arrlist)
         let ChangeDelta=ChangeDelta(original,revised)
-        var target=ArrayList<Char>(Array<Char>(122,item:'c'))
+        var target=ArrayList<Rune>(Array<Rune>(122,item:r'c'))
         var flag=1
         try{
             ChangeDelta.verify(target)

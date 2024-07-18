@@ -1,11 +1,11 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import math.*
+import diffUtils4cj.*
+import std.collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.math.*
 
 main(): Int64 {
     let test = RowTest()

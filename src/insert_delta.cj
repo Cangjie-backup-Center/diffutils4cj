@@ -1,8 +1,10 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 
 package diffUtils4cj
+
+import std.collection.*
 
 /**
  * Describes the insert-delta between original and revised texts.

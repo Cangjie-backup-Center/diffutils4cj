@@ -1,10 +1,10 @@
 // 3rd_party_lib:diffutils4cj/build/release/diffUtils4cj
 // 3rd_party_lib_ohos:diffutils4cj/build/aarch64-linux-ohos/diffUtils4cj
 
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
-from diffUtils4cj import diffUtils4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import diffUtils4cj.*
 
 @Test
 public class TestChunkB001{
@@ -16,9 +16,9 @@ public class TestChunkB001{
     ***/
     @TestCase
     func testChunkVerify0202(): Unit {
-        var target=ArrayList<Char>(Array<Char>(222,item:'c'))
-        var lines01=ArrayList<Char>(Array<Char>(100,item:'a'))
-        var lines02=Array<Char>(100,item:'a')
+        var target=ArrayList<Rune>(Array<Rune>(222,item:r'c'))
+        var lines01=ArrayList<Rune>(Array<Rune>(100,item:r'a'))
+        var lines02=Array<Rune>(100,item:r'a')
         var chunk01=Chunk(123,lines01)//last()=222,size=100
         var chunk02=Chunk(123,lines02)//last()=222,size=100
         var flag=0

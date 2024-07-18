@@ -1,8 +1,10 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 
 package diffUtils4cj
+
+import std.collection.*
 
 public class DiffRowGenerator {
     private var showInlineDiffs: Bool
@@ -170,11 +172,11 @@ public class DiffRowGenerator {
         var origList = ArrayList<String>()
         
         for (character in join(orig, "\n")) {
-            origList.append(Char(character).toString())
+            origList.append(Rune(character).toString())
         }
         var revList = ArrayList<String>()
         for (character in join(rev, "\n")) {
-            revList.append(Char(character).toString())
+            revList.append(Rune(character).toString())
         }
         var inlineDeltas: ArrayList<Delta<String>> = DiffUtils.diff(origList, revList).getDeltas()
         if (inlineDeltas.size < 3) {

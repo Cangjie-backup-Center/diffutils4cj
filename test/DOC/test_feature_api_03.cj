@@ -1,17 +1,17 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from diffUtils4cj import diffUtils4cj.*
-from std import collection.*
-from std import math.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import std.math.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import diffUtils4cj.*
 
 main() {
     let ccc = Test_FeatureApi03()
-    ccc.execute()
-    ccc.printResult()
-    0
+    let tester = ccc.asTestSuite()
+    let res = tester.runTests()
+    res.failedCount
 }
 @Test
 public class Test_FeatureApi03 {
