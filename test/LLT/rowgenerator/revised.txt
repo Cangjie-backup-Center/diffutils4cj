@@ -1,5 +1,5 @@
 /*
-    Copyright 2009 Dmitry Naumenko (dm.naumenko@gmail.com)
+    Copyright 2009 Dmitry Naumenko ()
     
     This file is part of Java Diff Utils Library.
 
@@ -27,7 +27,7 @@ import difflib.myers.*;
 /**
  * Implements the difference and patching engine
  * 
- * @author <a href="dm.naumenko@gmail.com">Dmitry Naumenko</a>
+ * @author <a href="">Dmitry Naumenko</a>
  * @version 0.4.1
  */
 public class DiffUtils {
@@ -176,7 +176,7 @@ public class DiffUtils {
 
 	/**
 	 * generateUnifiedDiff takes a Patch and some other arguments, returning the Unified Diff format text representing the Patch.
-	 * @author Bill James (tankerbay@gmail.com)
+	 * @author Bill James ()
 	 * 
 	 * @param fname1 - Filename of the original (unrevised file)
 	 * @param fname2 - Filename of the revised file
@@ -218,7 +218,7 @@ public class DiffUtils {
 
    /**
      * processDeltas takes a list of Deltas and outputs them together in a single block of Unified-Diff-format text.
-	 * @author Bill James (tankerbay@gmail.com)
+	 * @author Bill James ()
 	 * 
      * @param origLines - the lines of the original file
      * @param deltas    - the Deltas to be output as a single block
@@ -289,7 +289,7 @@ public class DiffUtils {
 
       /**
        * getDeltaText returns the lines to be added to the Unified Diff text from the Delta parameter
-       * @author Bill James (tankerbay@gmail.com)
+       * @author Bill James ()
        * 
        * @param delta - the Delta to output
        * @return list of String lines of code.

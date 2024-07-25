@@ -7,5 +7,5 @@ est&aacute; mais</p>p style="text-align: left;">Este texto est&aacute;
 centralizado nem este</p><p style="text-align: right;">Este texto
 est&aacute; alinhado a direita</p><ol><li>Este texto est&aacute; em uma
 lista num&eacute;rica</li></ol><p><a title="uol"
-href="http://www.uol.com.br" target="_blank">Este aqui &eacute; um
+href="" target="_blank">Este aqui &eacute; um
 link</a></p>

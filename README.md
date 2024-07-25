@@ -261,7 +261,7 @@ public class Test_ReadMe03 {
 
 ## 开源协议
 
-本项目基于 [Apache License 2.0](https://gitcode.com/Cangjie-TPC/diffutils4cj/blob/master/LICENSE) ，请自由的享受和参与开源。
+本项目基于 [Apache License 2.0](./LICENSE) ，请自由的享受和参与开源。
 
 ## 参与贡献
 

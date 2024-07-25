@@ -1,5 +1,5 @@
 /*
-    Copyright 2009 Dmitry Naumenko (dm.naumenko@gmail.com)
+    Copyright 2009 Dmitry Naumenko ()
     
     This file is part of Java Diff Utills Library.
 
@@ -27,7 +27,7 @@ import difflib.myers.*;
 /**
  * Implements the difference and patching engine
  * 
- * @author <a href="dm.naumenko@gmail.com">Dmitry Naumenko</a>
+ * @author <a href="">Dmitry Naumenko</a>
  * @version 0.4.1
  */
 public class DiffUtils {
