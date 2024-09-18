@@ -19,7 +19,7 @@ public class TestStringUtills{
     }
     @TestCase
     func testStringUtillsJoin02(): Unit {
-        let arr02=Array<Int64>([0,2,3,4,5])
+        let arr02=[0,2,3,4,5]
         let re_join=StringUtills.join(arr02,";")
         @Assert(re_join,"0;2;3;4;5")
     }

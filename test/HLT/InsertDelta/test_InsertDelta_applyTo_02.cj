@@ -17,7 +17,7 @@ public class TestInsertDeltaV002{
     @TestCase
     func testInsertDeltaApplyTo02(): Unit {
         var original=Chunk(-1,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revised=Chunk(123,Array<Int64>([7,8,9,10,11,12]))
+        var revised=Chunk(123,[7,8,9,10,11,12])
         let insertDelta=InsertDelta(original,revised)
         var target=ArrayList<Int64>()
         var flag=1

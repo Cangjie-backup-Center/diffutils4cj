@@ -15,11 +15,11 @@ public class TestDeleteDeltaV002{
     ***/
     @TestCase
     func testDeleteDeltaVerify02(): Unit {
-        var lines_arrlist=ArrayList<Rune>(Array<Rune>(100,item: r'c'))
+        var lines_arrlist=ArrayList<Rune>(Array<Rune>(100,repeat: r'c'))
         var original=Chunk(123,lines_arrlist)//last()=224,size=100
         var revised=Chunk(123,lines_arrlist)//last()=224,size=100
         let deleteDelta=DeleteDelta(original,revised)
-        var target=ArrayList<Rune>(Array<Rune>(250,item: r'c'))
+        var target=ArrayList<Rune>(Array<Rune>(250,repeat: r'c'))
         var flag=1
         try{
             deleteDelta.verify(target)

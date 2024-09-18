@@ -13,8 +13,8 @@ main(): Int64 {
 }
 
 func testMyersDiffMyersDiff0141(): Unit {
-    var original=Array<String>(["value01","value02","value03","value04","value05","value06","value07"])
-    var revised=Array<String>(["value08","value09","value10","value11","value12","value13","value14"])
+    var original=["value01","value02","value03","value04","value05","value06","value07"]
+    var revised=["value08","value09","value10","value11","value12","value13","value14"]
     var myersDiff01=MyersDiff<String>()
     var pathch01=myersDiff01.diff(original,revised)
     var deltas01=pathch01.getDeltas()
@@ -25,8 +25,8 @@ func testMyersDiffMyersDiff0141(): Unit {
 }
 
 func testMyersDiffMyersDiff0142(): Unit {
-    var original=Array<String>(["value01","value02","value03","value04","value05","value06","value07"])
-    var revised=Array<String>(["value08","value09","value10","value11","value12","value13","value14"])
+    var original=["value01","value02","value03","value04","value05","value06","value07"]
+    var revised=["value08","value09","value10","value11","value12","value13","value14"]
     var myersDiff02=MyersDiff<String>(SubEqualizer01<String>())
     var pathch02=myersDiff02.diff(original,revised)
     var deltas02=pathch02.getDeltas()

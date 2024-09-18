@@ -16,7 +16,7 @@ public class TestInsertDeltaV002{
     @TestCase
     func testInsertDeltaRestore02(): Unit {
         var original=Chunk(2,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revisedRestore=Chunk(0,Array<Int64>([7,8,9,10,11,12]))
+        var revisedRestore=Chunk(0,[7,8,9,10,11,12])
         let insertDeltaRestore=InsertDelta(original,revisedRestore)
         var targetRestore=ArrayList<Int64>([1,2,3,4,5,6])
         insertDeltaRestore.restore(targetRestore)

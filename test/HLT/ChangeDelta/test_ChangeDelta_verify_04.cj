@@ -19,7 +19,7 @@ public class TestChangeDeltaV002{
         var original=Chunk(123,lines_arrlist)//last()=224,size=100
         var revised=Chunk(123,lines_arrlist)//last()=224,size=100
         let changeDelta=ChangeDelta(original,revised)
-        var target=ArrayList<Rune>(Array<Rune>(123,item:r'c'))
+        var target=ArrayList<Rune>(Array<Rune>(123,repeat:r'c'))
         var flag=1
         try{
             changeDelta.verify(target)

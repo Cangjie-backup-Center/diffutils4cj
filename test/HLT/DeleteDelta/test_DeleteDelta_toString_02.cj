@@ -16,7 +16,7 @@ public class TestDeleteDeltaV002{
     @TestCase
     func testDeleteDeltaToString02(): Unit {
         var original=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revised=Chunk(123,Array<Int64>([7,8,9,10,11,12]))
+        var revised=Chunk(123,[7,8,9,10,11,12])
         let deleteDelta=DeleteDelta(original,revised)
         let re_act=deleteDelta.toString()
         let re_exp="[DeleteDelta, position: ${original.getPosition()}, lines: ${original.getLines()}]"

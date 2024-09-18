@@ -16,9 +16,9 @@ public class TestInsertDeltaV002{
     @TestCase
     func testInsertDeltaVerify02(): Unit {
         var original=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revised=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        var revised=Chunk(123,[1,2,3,4,5,6])
         let insertDelta=InsertDelta(original,revised)
-        var target=ArrayList<Int64>(Array<Int64>(123,item:5))
+        var target=ArrayList<Int64>(Array<Int64>(123,repeat:5))
         @Assert(original.getPosition() > target.size,false)
         var flag=1
         try{

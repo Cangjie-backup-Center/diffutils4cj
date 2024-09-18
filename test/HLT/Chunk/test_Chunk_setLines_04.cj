@@ -17,7 +17,7 @@ public class TestChunkB001{
     @TestCase
     func testChunkSetLines01(): Unit {
         var changedArrli=ArrayList<Int16>([1,2,3,4,5,6])
-        var changedArray=Array<Int16>([1,2,3,4,5,6])
+        var changedArray=[1i16,2i16,3i16,4i16,5i16,6i16]
         var chunk01=Chunk(123,changedArrli)
         var chunk02=Chunk(123,changedArray)
         var changed=ArrayList<Int16>([1,2,3,4,5,6,1,2,3,4,5,6])

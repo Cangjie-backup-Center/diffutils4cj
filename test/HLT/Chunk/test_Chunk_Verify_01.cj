@@ -18,7 +18,7 @@ public class TestChunkB001{
     func testChunkVerify01(): Unit {
         var chunk01=Chunk(123,ArrayList<Int64>())
         var chunk02=Chunk(123,Array<Int64>())
-        var target=ArrayList<Int64>(Array<Int64>(10,item:108))
+        var target=ArrayList<Int64>(Array<Int64>(10,repeat:108))
         var flag=0
         try{
             chunk01.verify(target)

@@ -18,7 +18,7 @@ public class TestChangeDeltaV002{
     @TestCase
     func testChangeDeltaApplyTo03(): Unit {
         var original=Chunk(2,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revised=Chunk(3,Array<Int64>([7,8,9,10,11,12]))
+        var revised=Chunk(3,[7,8,9,10,11,12])
         let changeDelta=ChangeDelta(original,revised)
         var target=ArrayList<Int64>([-7,-8,1,2,3,4,5,6,-13,-14])
         changeDelta.applyTo(target)

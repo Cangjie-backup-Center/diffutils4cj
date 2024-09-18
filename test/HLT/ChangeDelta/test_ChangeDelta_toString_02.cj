@@ -16,7 +16,7 @@ public class TestChangeDeltaV002{
     @TestCase
     func testChangeDeltaToString02(): Unit {
         var original=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revised=Chunk(123,Array<Int64>([7,8,9,10,11,12]))
+        var revised=Chunk(123,[7,8,9,10,11,12])
         let changeDelta=ChangeDelta(original,revised)
         let re_act=changeDelta.toString()
         let re_exp="[ChangeDelta, position: ${original.getPosition()}, lines: ${original.getLines()} to ${revised.getLines()}]"

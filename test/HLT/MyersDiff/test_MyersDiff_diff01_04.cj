@@ -14,8 +14,8 @@ public class TestMyersDiffB001{
         public init()
         测试场景:original!=revised,original完全不等于revised
     ***/
-    public var original=Array<String>(["value01","value02","value03","value04","value05","value06","value07"])
-    public var revised=Array<String>(["value08","value09","value10","value11","value12","value13","value14"])
+    public var original=["value01","value02","value03","value04","value05","value06","value07"]
+    public var revised=["value08","value09","value10","value11","value12","value13","value14"]
     @TestCase
     func testMyersDiffMyersDiff0141(): Unit {
         var myersDiff01=MyersDiff<String>()

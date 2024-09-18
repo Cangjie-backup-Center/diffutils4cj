@@ -21,7 +21,7 @@ public class TestChunkB001{
         @Assert(chunk01.equals(chunk01),true)
         @Assert(chunk02.equals(chunk01),true)
         var chunk03=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var chunk04=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        var chunk04=Chunk(123,[1,2,3,4,5,6])
         @Assert(chunk03.equals(chunk04),true)
         @Assert(chunk03.equals(chunk03),true)
     }
