@@ -17,7 +17,7 @@ public class TestDeleteDeltaV002{
     @TestCase
     func testDeleteDeltaApplyTo03(): Unit {
         var original=Chunk(-1,ArrayList<Int64>())
-        var revised=Chunk(1,Array<Int64>([1]))
+        var revised=Chunk(1,[1])
         let deleteDelta=DeleteDelta(original,revised)
         var target=ArrayList<Int64>()
         var flag=1

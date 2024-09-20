@@ -16,7 +16,7 @@ public class TestChangeDeltaB001{
     @TestCase
     func testChangeDeltaGetType01(): Unit {
         var chunk01=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var chunk02=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        var chunk02=Chunk(123,[1,2,3,4,5,6])
         let changeDelta=ChangeDelta(chunk01,chunk02)
         var flag=1
         match(changeDelta.getType()){

@@ -16,9 +16,9 @@ public class TestChunkB001{
     ***/
     @TestCase
     func testChunkVerify0202(): Unit {
-        var target=ArrayList<Rune>(Array<Rune>(222,item:r'c'))
-        var lines01=ArrayList<Rune>(Array<Rune>(100,item:r'a'))
-        var lines02=Array<Rune>(100,item:r'a')
+        var target=ArrayList<Rune>(Array<Rune>(222,repeat:r'c'))
+        var lines01=ArrayList<Rune>(Array<Rune>(100,repeat:r'a'))
+        var lines02=Array<Rune>(100,repeat:r'a')
         var chunk01=Chunk(123,lines01)//last()=222,size=100
         var chunk02=Chunk(123,lines02)//last()=222,size=100
         var flag=0

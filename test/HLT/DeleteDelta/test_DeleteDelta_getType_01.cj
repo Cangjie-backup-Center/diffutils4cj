@@ -16,7 +16,7 @@ public class TestDeleteDeltaB001{
     @TestCase
     func testDeleteDeltaGetType01(): Unit {
         var chunk01=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var chunk02=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        var chunk02=Chunk(123,[1,2,3,4,5,6])
         let deleteDelta=DeleteDelta(chunk01,chunk02)
         var flag=1
         match(deleteDelta.getType()){

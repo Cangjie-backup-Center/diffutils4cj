@@ -16,7 +16,7 @@ public class TestPatchV002{
     @TestCase
     func testPatchApplyTo03(): Unit {
         var original=Chunk(1,ArrayList<Int64>([1,2,3]))
-        var revised=Chunk(1,Array<Int64>([3,4,5,7,8,6]))
+        var revised=Chunk(1,[3,4,5,7,8,6])
         let insertDelta=InsertDelta(original,revised)
         var patch=Patch<Int64>()
         patch.addDelta(insertDelta)

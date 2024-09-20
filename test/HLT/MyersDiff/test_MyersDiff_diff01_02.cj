@@ -14,7 +14,7 @@ public class TestMyersDiffB001{
         public init()
         测试场景:original==revised,均不为空
     ***/
-    public var arr=Array<String>(["value01","value01","value01","value01","value01","value01","value01"])
+    public var arr=["value01","value01","value01","value01","value01","value01","value01"]
     @TestCase
     func testMyersDiffMyersDiff0121(): Unit {
         var myersDiff01=MyersDiff<String>()

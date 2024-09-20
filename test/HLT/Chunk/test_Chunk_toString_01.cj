@@ -17,7 +17,7 @@ public class TestChunkB001{
     @TestCase
     func testChunkToString01(): Unit {
         var chunk01=Chunk(123,ArrayList<Int64>([1,2,3,4,5,6]))
-        var chunk02=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        var chunk02=Chunk(123,[1,2,3,4,5,6])
         @Assert(chunk01.toString(),"[position: " + chunk01.getPosition().toString() + ", size: " + chunk01.size().toString() + ", lines: " + chunk01.getLines().toString() + "]")
         @Assert(chunk02.toString(),"[position: " + chunk02.getPosition().toString() + ", size: " + chunk02.size().toString() + ", lines: " + chunk02.getLines().toString() + "]")
         chunk01=Chunk(123,ArrayList<Int64>())

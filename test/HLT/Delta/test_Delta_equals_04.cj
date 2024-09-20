@@ -16,7 +16,7 @@ public class TestDeltaV002{
     @TestCase
     func testDeltaEquals04(): Unit {
         var original=Chunk(124,ArrayList<Int64>([1,2,3,4,5,6]))
-        var revised=Chunk(123,Array<Int64>([1,2,3,4,5,6]))
+        var revised=Chunk(123,[1,2,3,4,5,6])
         let insertDelta01=InsertDelta(original,revised)
         let insertDelta02=InsertDelta(revised,original)
         @Assert(insertDelta01.equals(insertDelta02),false)
