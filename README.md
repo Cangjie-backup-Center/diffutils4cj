@@ -5,7 +5,7 @@
 <p align="center">
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.56.4-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.58.3-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-93.3%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -159,7 +159,7 @@ main() {
 public class Test_ReadMe01 {
     @TestCase
     public func testReadMe01(): Unit {
-		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>(["hhh"]), ArrayList<String>(["hhh", "jjj", "kkk"]))
 		@Assert(patch.getDeltas().isEmpty(),false)
 		@Assert(patch.getDeltas().size,1)
 
@@ -197,7 +197,7 @@ main() {
 public class Test_ReadMe02 {
     @TestCase
     public func testReadMe02(): Unit {
-		var rev = ArrayList<String>("hhh", "jjj", "kkk")
+		var rev = ArrayList<String>(["hhh", "jjj", "kkk"])
 		var orig= ArrayList<String>()
 		var patch:  Patch<String>= DiffUtils.diff(rev, orig)
 		var res = DiffUtils.patch(rev,patch)
@@ -257,7 +257,7 @@ public class Test_ReadMe03 {
 
 在下述版本验证通过：
 
-    Cangjie Version: 0.56.4
+    Cangjie Version: 0.58.3
 
 ## 开源协议
 

@@ -16,7 +16,7 @@ main() {
 public class Test_ReadMe01 {
     @TestCase
     public func testReadMe01(): Unit {
-		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>(["hhh"]), ArrayList<String>(["hhh", "jjj", "kkk"]))
 		@Assert(patch.getDeltas().isEmpty(),false)
 		@Assert(patch.getDeltas().size,1)
 

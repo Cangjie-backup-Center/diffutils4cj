@@ -23,8 +23,8 @@ public class TestDiffRowGenerator{
         let exp_startTag="<${tag} class=\"${cssClass.getOrThrow()}\">"
         let exp_endTag="</${tag}>"
         var exp_wrapInTag=ArrayList<String>(["1","2","3","4","5"])
-        exp_wrapInTag.insert(startPosition,exp_startTag)
-        exp_wrapInTag.insert(endPosition,exp_endTag)
+        exp_wrapInTag.add(exp_startTag, at: startPosition)
+        exp_wrapInTag.add(exp_endTag, at: endPosition)
         @Assert(re_wrapInTag,exp_wrapInTag)
     }
 }

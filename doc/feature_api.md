@@ -434,7 +434,7 @@ main() {
 public class Test_FeatureApi01 {
     @TestCase
     public func testFeatureApi01(): Unit {
-		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>(["hhh"]), ArrayList<String>(["hhh", "jjj", "kkk"]))
 		@Assert(patch.getDeltas().isEmpty(),false)
 		@Assert(patch.getDeltas().size,1)
 
@@ -617,7 +617,7 @@ main() {
 public class Test_FeatureApi02 {
     @TestCase
     public func testFeatureApi02(): Unit {
-		var rev = ArrayList<String>("hhh", "jjj", "kkk")
+		var rev = ArrayList<String>(["hhh", "jjj", "kkk"])
 		var orig= ArrayList<String>()
 		var patch:  Patch<String>= DiffUtils.diff(rev, orig)
 		var res = DiffUtils.patch(rev,patch)

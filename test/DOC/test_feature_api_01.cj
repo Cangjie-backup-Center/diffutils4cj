@@ -16,7 +16,7 @@ main() {
 public class Test_FeatureApi01 {
     @TestCase
     public func testFeatureApi01(): Unit {
-		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>("hhh"), ArrayList<String>("hhh", "jjj", "kkk"))
+		var patch:  Patch<String>= DiffUtils.diff(ArrayList<String>(["hhh"]), ArrayList<String>(["hhh", "jjj", "kkk"]))
 		@Assert(patch.getDeltas().isEmpty(),false)
 		@Assert(patch.getDeltas().size,1)
 
