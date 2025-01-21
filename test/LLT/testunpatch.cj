@@ -20,8 +20,8 @@ public class unpatchTest {
     
     @TestCase
     public func unpatchTest01(): Unit {
-        var rev = ArrayList<String>("hhh", "jjj", "kk")
-        var orig= ArrayList<String>("aaa", "jjj", "kk")
+        var rev = ArrayList<String>(["hhh", "jjj", "kk"])
+        var orig= ArrayList<String>(["aaa", "jjj", "kk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.unpatch(orig,patch)
         println(res)
@@ -30,8 +30,8 @@ public class unpatchTest {
 
     @TestCase
     public func unpatchTest02(): Unit {
-        var rev = ArrayList<String>("hhh")
-        var orig= ArrayList<String>("hhh", "jjj", "kkk")
+        var rev = ArrayList<String>(["hhh"])
+        var orig= ArrayList<String>(["hhh", "jjj", "kkk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.unpatch(orig,patch)
         println(res)
@@ -40,7 +40,7 @@ public class unpatchTest {
 
     @TestCase
     public func unpatchTest03(): Unit {
-        var rev = ArrayList<String>("hhh", "jjj", "kkk")
+        var rev = ArrayList<String>(["hhh", "jjj", "kkk"])
         var orig= ArrayList<String>()
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.unpatch(orig,patch)
@@ -50,8 +50,8 @@ public class unpatchTest {
 
     @TestCase
     public func unpatchTest04(): Unit {
-        var rev = ArrayList<String>("hhh", "jjj", "kk")
-        var orig= ArrayList<String>("asdas", "jjj", "kkk","kk")
+        var rev = ArrayList<String>(["hhh", "jjj", "kk"])
+        var orig= ArrayList<String>(["asdas", "jjj", "kkk","kk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.unpatch(orig,patch)
         println(res)

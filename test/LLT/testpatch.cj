@@ -21,8 +21,8 @@ public class patchTest {
     
     @TestCase
     public func patchTest01(): Unit {
-        var rev = ArrayList<String>("hhh")
-        var orig= ArrayList<String>("hhh", "jjj", "kkk")
+        var rev = ArrayList<String>(["hhh"])
+        var orig= ArrayList<String>(["hhh", "jjj", "kkk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.patch(rev,patch )
         @Assert(res,orig)
@@ -31,7 +31,7 @@ public class patchTest {
     @TestCase
     public func patchTest02(): Unit {
         var rev = ArrayList<String>()
-        var orig= ArrayList<String>("hhh", "jjj", "kkk")
+        var orig= ArrayList<String>(["hhh", "jjj", "kkk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.patch(rev,patch)
         @Assert(res,orig)   
@@ -39,7 +39,7 @@ public class patchTest {
 
     @TestCase
     public func patchTest03(): Unit {
-        var rev = ArrayList<String>("hhh", "jjj", "kkk")
+        var rev = ArrayList<String>(["hhh", "jjj", "kkk"])
         var orig= ArrayList<String>()
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.patch(rev,patch)
@@ -48,8 +48,8 @@ public class patchTest {
 
     @TestCase
     public func patchTest04(): Unit {
-        var rev = ArrayList<String>("hhh", "jjj", "kk")
-        var orig= ArrayList<String>("asdas", "jjj", "kkk","kk")
+        var rev = ArrayList<String>(["hhh", "jjj", "kk"])
+        var orig= ArrayList<String>(["asdas", "jjj", "kkk","kk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.patch(rev,patch)
         @Assert(res,orig)
@@ -57,8 +57,8 @@ public class patchTest {
 
     @TestCase
     public func patchTest05(): Unit {
-        var rev = ArrayList<String>("hhh", "jjj", "kk","uiqywe")
-        var orig= ArrayList<String>("asdas", "jjj", "kkk","kk")
+        var rev = ArrayList<String>(["hhh", "jjj", "kk","uiqywe"])
+        var orig= ArrayList<String>(["asdas", "jjj", "kkk","kk"])
         var patch:  Patch<String>= DiffUtils.diff(rev, orig)
         var res = DiffUtils.patch(rev,patch)
         @Assert(res,orig)

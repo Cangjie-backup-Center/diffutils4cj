@@ -5,7 +5,7 @@ import diffUtils4cj.*
 import std.collection.*
 
 main(): Int64 {
-    var patch:  Patch<Int64>= DiffUtils.diff(ArrayList<Int64>(1,2,3,4), ArrayList<Int64>(1,1,3,4))
+    var patch:  Patch<Int64>= DiffUtils.diff(ArrayList<Int64>([1,2,3,4]), ArrayList<Int64>([1,1,3,4]))
     if (patch.getDeltas().isEmpty()) {
         return 1
     }

@@ -20,7 +20,7 @@ public class Patch<T> where T <: Equal<T> & ToString {
      * @since 0.38.2
      */
     public func addDelta(delta: Delta<T>): Unit {
-        deltas.append(delta)
+        deltas.add(delta)
     }
 
     /**

@@ -23,7 +23,7 @@ public class StringTest {
     
     @TestCase
     public func stringTest01(): Unit {
-        var arr = ArrayList<String>(" ","","test1","test2")
+        var arr = ArrayList<String>([" ","","test1","test2"])
         var res = StringUtills.join(arr, "/")
         @Assert(res," //test1/test2")
     }
@@ -48,7 +48,7 @@ public class StringTest {
 
     @TestCase
     public func stringTest05(): Unit {
-        var arr = ArrayList<String>(" ","","<te\tst1","test2>")
+        var arr = ArrayList<String>([" ","","<te\tst1","test2>"])
         var res = StringUtills.normalize(arr)
         @Assert(res.toString(),"[ , , &lt;te    st1, test2&gt;]")
     }
@@ -61,7 +61,7 @@ public class StringTest {
 
     @TestCase
     public func stringTest07(): Unit {
-        var arr = ArrayList<String>(" ","","test1","test2")
+        var arr = ArrayList<String>([" ","","test1","test2"])
         var res = StringUtills.wrapText(arr,1)
         @Assert(res.toString(),"[ , , t<br>e<br>s<br>t<br>1, t<br>e<br>s<br>t<br>2]")
     }

@@ -34,7 +34,7 @@ public class RowTest {
 
     @TestCase
     public func testwrapInTag3(): Unit {
-        var arr = ArrayList<String>("one","two","three","four")
+        var arr = ArrayList<String>(["one","two","three","four"])
         var str = DiffRowGenerator.wrapInTag(arr, 1, 3, "testtag", "").toString()
         println(str)
         let res: String = "[one, <testtag class=\"\">, two, </testtag>, three, four]"
@@ -43,7 +43,7 @@ public class RowTest {
 
     @TestCase
     public func testwrapInTag4(): Unit {
-        var arr = ArrayList<String>("one","two","three","four")
+        var arr = ArrayList<String>(["one","two","three","four"])
         var str = DiffRowGenerator.wrapInTag(arr, 1, 3, "testtag", None).toString()
         println(str)
         let res: String = "[one, <testtag>, two, </testtag>, three, four]"

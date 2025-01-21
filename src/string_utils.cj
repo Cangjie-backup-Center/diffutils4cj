@@ -81,7 +81,7 @@ public class StringUtills {
     public static func normalize(list: ArrayList<String>): ArrayList<String> {
         var result: ArrayList<String> =  ArrayList<String>()
         for (line in list) {
-            result.append(normalize(line))
+            result.add(normalize(line))
         }
         return result
     }
@@ -98,7 +98,7 @@ public class StringUtills {
     public static func wrapText( list: ArrayList<String>, columnWidth: Int64): ArrayList<String> {
         var result: ArrayList<String> =  ArrayList<String>()
         for (line in list) {
-            result.append(wrapText(line, columnWidth));
+            result.add(wrapText(line, columnWidth));
         }
         return result;
     }

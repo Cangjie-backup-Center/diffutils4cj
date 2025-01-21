@@ -46,7 +46,7 @@ public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
         var size: Int64 = getOriginal().size()
         var i: Int64 = 0
         while (i < size) {
-            target.remove(position)
+            target.remove(at: position)
             i++
         }
     }
@@ -65,7 +65,7 @@ public class DeleteDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
         var i: Int64 = 0
         try {
             while (i < lines.size) {
-                target.insert(position + i, lines.get(i).getOrThrow())
+                target.add(lines.get(i).getOrThrow(), at: position + i)
                 i++
             }
         } catch(e: IndexOutOfBoundsException) {
