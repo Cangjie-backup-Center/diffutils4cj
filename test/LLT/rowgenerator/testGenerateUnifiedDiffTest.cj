@@ -96,16 +96,16 @@ public class UnifiedTest {
         var original = ArrayList<String>()
         var revised  = ArrayList<String>()
 
-        original.add("test line1")
-        original.add("test line2")
-        original.add("test line 4")
-        original.add("test line 5")
+        original.append("test line1")
+        original.append("test line2")
+        original.append("test line 4")
+        original.append("test line 5")
 
-        revised.add("test line1")
-        revised.add("test line2")
-        revised.add("@@ -2,6 +2,7 @@")
-        revised.add("test line 4")
-        revised.add("test line 5")
+        revised.append("test line1")
+        revised.append("test line2")
+        revised.append("@@ -2,6 +2,7 @@")
+        revised.append("test line 4")
+        revised.append("test line 5")
 
         var patch:Patch<String> = DiffUtils.diff(original, revised);
         var udiff = DiffUtils.generateUnifiedDiff("original", "revised",
@@ -116,10 +116,10 @@ public class UnifiedTest {
     private func fileToLines(filename: String): ArrayList<String> {
         var lines =  ArrayList<String>()
         try {
-            var reader = StringReader(File(filename, OpenMode.Read))
+            var reader = StringReader(File(filename, Open(true,false)))
             while(true) {
                 match (reader.readln()) {
-                    case Some(v) => lines.add(v)
+                    case Some(v) => lines.append(v)
                     case None => break
                 }
             }

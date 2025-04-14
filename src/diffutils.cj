@@ -140,8 +140,8 @@ public class DiffUtils {
             for (raw_line in rawChunk) {
                 tag = raw_line[0]
                 rest = raw_line[1]
-                if (tag == (" ") || tag == ("-")) { oldChunkLines.add(rest) }
-                if (tag == (" ") || tag == ("+")) { newChunkLines.add(rest) }
+                if (tag == (" ") || tag == ("-")) { oldChunkLines.append(rest) }
+                if (tag == (" ") || tag == ("+")) { newChunkLines.append(rest) }
             }
             patch.addDelta(ChangeDelta<String>(Chunk<String>(old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1,newChunkLines)))
             rawChunk.clear()
@@ -156,9 +156,9 @@ public class DiffUtils {
         if (line.size > 0) {
             tag = line[..1]
             rest = line[1..]
-           if (tag == (" ") || tag == ("+") || tag == ("-")) { rawChunk.add([tag, rest]) }
+           if (tag == (" ") || tag == ("+") || tag == ("-")) { rawChunk.append([tag, rest]) }
         } else { 
-            rawChunk.add([" ", ""])
+            rawChunk.append([" ", ""])
         }
     }
 
@@ -171,8 +171,8 @@ public class DiffUtils {
         for (raw_line in rawChunk) {
             tag = raw_line[0]
             rest = raw_line[1]
-            if (tag == (" ") || tag == ("-")) { oldChunkLines.add(rest) }
-            if (tag == (" ") || tag == ("+")) { newChunkLines.add(rest) }
+            if (tag == (" ") || tag == ("-")) { oldChunkLines.append(rest) }
+            if (tag == (" ") || tag == ("+")) { newChunkLines.append(rest) }
         }
         patch.addDelta(ChangeDelta<String>(Chunk<String>( old_ln - 1, oldChunkLines), Chunk<String>(new_ln - 1, newChunkLines)))
         rawChunk.clear()
@@ -196,8 +196,8 @@ public class DiffUtils {
             contextSize: Int64): ArrayList<String> {
         if (!patch.getDeltas().isEmpty()) {
             var ret = ArrayList<String>()
-            ret.add("--- " + original)
-            ret.add("+++ " + revised)
+            ret.append("--- " + original)
+            ret.append("+++ " + revised)
 
             var patchDeltas: ArrayList<Delta<String>> = ArrayList<Delta<String>>(
                     patch.getDeltas())
@@ -209,7 +209,7 @@ public class DiffUtils {
             // Delta's to
             // process
             var delta: Delta<String> = patchDeltas.get(0).getOrThrow()
-            deltas.add(delta) // add the first Delta to the current set
+            deltas.append(delta) // add the first Delta to the current set
             // if there's more than 1 Delta, we may need to output them together
             if (patchDeltas.size > 1) {
                 var i = 1
@@ -227,16 +227,16 @@ public class DiffUtils {
                     var nextDelta: Delta<String> = patchDeltas.get(i).getOrThrow()
                     if ((position + delta.getOriginal().size() + contextSize) >= (nextDelta
                             .getOriginal().getPosition() - contextSize)) {
-                        deltas.add(nextDelta)
+                        deltas.append(nextDelta)
                     } else {
                         // if it isn't, output the current set,
                         // then create a new set and add the current Delta to
                         // it.
                         var curBlock: ArrayList<String> = processDeltas(originalLines,
                                 deltas, contextSize)
-                        ret.add(all: curBlock)
+                        ret.appendAll(curBlock)
                         deltas.clear()
-                        deltas.add(nextDelta)
+                        deltas.append(nextDelta)
                     }
                     delta = nextDelta
                     i++
@@ -246,7 +246,7 @@ public class DiffUtils {
             // don't forget to process the last set of Deltas
             var curBlock: ArrayList<String> = processDeltas(originalLines, deltas,
                     contextSize)
-            ret.add(all: curBlock)
+            ret.appendAll(curBlock)
             return ret
         }
         return ArrayList<String>()
@@ -282,14 +282,14 @@ public class DiffUtils {
         // output the context before the first Delta
         var line: Int64 = contextStart
         while (line < curDelta.getOriginal().getPosition()) { //
-            buffer.add(" " + origLines.get(line).getOrThrow())
+            buffer.append(" " + origLines.get(line).getOrThrow())
             origTotal++
             revTotal++
             line++
         }
 
         // output the first Delta
-        buffer.add(all: getDeltaText(curDelta))
+        buffer.appendAll(getDeltaText(curDelta))
         origTotal += curDelta.getOriginal().getLines().size
         revTotal += curDelta.getRevised().getLines().size
 
@@ -300,12 +300,12 @@ public class DiffUtils {
             line = intermediateStart
             while ( line < nextDelta.getOriginal().getPosition() ) {
                 // output the code between the last Delta and this one
-                buffer.add(" " + origLines.get(line).getOrThrow())
+                buffer.append(" " + origLines.get(line).getOrThrow())
                 origTotal++
                 revTotal++
                 line++
             }
-            buffer.add(all: getDeltaText(nextDelta)) // output the Delta
+            buffer.appendAll(getDeltaText(nextDelta)) // output the Delta
             origTotal += nextDelta.getOriginal().getLines().size
             revTotal += nextDelta.getRevised().getLines().size
             curDelta = nextDelta
@@ -316,7 +316,7 @@ public class DiffUtils {
         contextStart = curDelta.getOriginal().getPosition()    + curDelta.getOriginal().getLines().size
         line = contextStart
         while ( (line < (contextStart + contextSize))&& (line < origLines.size)) {
-            buffer.add(" " + origLines.get(line).getOrThrow())
+            buffer.append(" " + origLines.get(line).getOrThrow())
             origTotal++
             revTotal++
             line++
@@ -325,7 +325,7 @@ public class DiffUtils {
         // Create and insert the block header, conforming to the Unified Diff
         // standard
         var header = appendHeader(origStart,origTotal,revStart,revTotal)
-        buffer.add(header.toString(), at: 0)
+        buffer.insert(0, header.toString())
         return buffer
     }
 
@@ -372,10 +372,10 @@ public class DiffUtils {
     private static func getDeltaText(delta: Delta<String>): ArrayList<String> {
         var buffer: ArrayList<String> = ArrayList<String>()
         for (line in delta.getOriginal().getLines()) {
-            buffer.add("-" + line)
+            buffer.append("-" + line)
         }
         for (line in delta.getRevised().getLines()) {
-            buffer.add("+" + line)
+            buffer.append("+" + line)
         }
         return buffer
     }

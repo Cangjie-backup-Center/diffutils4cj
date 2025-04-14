@@ -47,12 +47,12 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
         var size: Int64 = getOriginal().size()
         var i: Int64 = 0
         while (i < size) {
-            target.remove(at: position)
+            target.remove(position)
             i++
         }
         i = 0;
         for (line in getRevised().getLines()) {
-            target.add(line, at: position + i)
+            target.insert(position + i, line)
             i++
         }
     }
@@ -72,7 +72,7 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
         try {
             while (i < size) {
                 if (position < target.size) {
-                    target.remove(at: position)
+                    target.remove(position)
                 } else {
                     break
                 }
@@ -81,9 +81,9 @@ public class ChangeDelta<T> <:  Delta<T> where T <: Equal<T> & ToString {
             i = 0
             for (line in getOriginal().getLines()) {
                 if ((position + i) == target.size) {
-                    target.add(line)
+                    target.append(line)
                 } else {
-                    target.add(line, at: position + i)
+                    target.insert(position + i, line)
                 }
                 i++
             }

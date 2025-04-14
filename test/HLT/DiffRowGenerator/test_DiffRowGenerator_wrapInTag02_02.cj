@@ -23,8 +23,8 @@ public class TestDiffRowGenerator{
         let exp_startTag="<${tag}>"
         let exp_endTag="</${tag}>"
         var exp_wrapInTag=sequence
-        exp_wrapInTag.add(exp_startTag, at: startPosition)
-        exp_wrapInTag.add(exp_endTag, at: endPosition)
+        exp_wrapInTag.insert(startPosition, exp_startTag)
+        exp_wrapInTag.insert(endPosition, exp_endTag)
         @Assert(re_wrapInTag,exp_wrapInTag)
     }
 }

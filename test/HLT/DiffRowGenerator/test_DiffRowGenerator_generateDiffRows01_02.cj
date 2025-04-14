@@ -22,7 +22,7 @@ public class TestDiffRowGenerator{
         let re_generateDiffRows=diffRowGenerator.generateDiffRows(original,revised,patch).toString()
         var exp_generateDiffRows_tmp=ArrayList<DiffRow>()
         for (line in original){
-            exp_generateDiffRows_tmp.add(DiffRow(Tag.EQUAL, line, line))
+            exp_generateDiffRows_tmp.append(DiffRow(Tag.EQUAL, line, line))
         }
         let exp_generateDiffRows=exp_generateDiffRows_tmp.toString()
         @Assert(re_generateDiffRows,exp_generateDiffRows)

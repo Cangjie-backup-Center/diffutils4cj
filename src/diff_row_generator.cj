@@ -86,7 +86,7 @@ public class DiffRowGenerator {
             if (delta is InsertDelta<String>) {
                 endPos = orig.last() + 1
                 for (line in rev.getLines()) {
-                    diffRows.add(DiffRow(Tag.INSERT, "", line))
+                    diffRows.append(DiffRow(Tag.INSERT, "", line))
                 }
                 i++
                 continue
@@ -96,7 +96,7 @@ public class DiffRowGenerator {
             if (delta is DeleteDelta<String>) {
                 endPos = orig.last() + 1
                 for (line in orig.getLines()) {
-                    diffRows.add(DiffRow(Tag.DELETE, line, ""))
+                    diffRows.append(DiffRow(Tag.DELETE, line, ""))
                 }
                 i++
                 continue
@@ -111,7 +111,7 @@ public class DiffRowGenerator {
         // Copy the final matching chunk if any.
         if (endPos == original.size) { return diffRows }
         for (line in original.slice(endPos..original.size)) {
-            diffRows.add(DiffRow(Tag.EQUAL, line, line))
+            diffRows.append(DiffRow(Tag.EQUAL, line, line))
         }
         return diffRows
     }
@@ -120,16 +120,16 @@ public class DiffRowGenerator {
         if (orig.size() == rev.size()) {
             var j = 0
             while (j < orig.size()) {
-                diffRows.add(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
+                diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
                 j++
             }
         } else if (orig.size() > rev.size()) {
             var j = 0
             while (j < orig.size()) {
                 if (rev.getLines().size > j) {
-                    diffRows.add(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
+                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
                 } else {
-                    diffRows.add(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), ""))
+                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), ""))
                 }
                 j++
             }
@@ -137,9 +137,9 @@ public class DiffRowGenerator {
             var j = 0
             while (j < rev.size()) {
                 if (orig.getLines().size > j) {
-                    diffRows.add(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
+                    diffRows.append(DiffRow(Tag.CHANGE, orig.getLines().get(j).getOrThrow(), rev.getLines().get(j).getOrThrow()))
                 } else {
-                    diffRows.add(DiffRow(Tag.CHANGE, "", rev.getLines().get(j).getOrThrow()))
+                    diffRows.append(DiffRow(Tag.CHANGE, "", rev.getLines().get(j).getOrThrow()))
                 }
                 j++
             }
@@ -155,7 +155,7 @@ public class DiffRowGenerator {
 
         // catch the equal prefix for each chunk
         for (line in original.slice(endPos..orig.getPosition())) {
-            diffRows.add(DiffRow(Tag.EQUAL, line, line))
+            diffRows.append(DiffRow(Tag.EQUAL, line, line))
         }
     }
 
@@ -172,11 +172,11 @@ public class DiffRowGenerator {
         var origList = ArrayList<String>()
         
         for (character in join(orig, "\n")) {
-            origList.add(Rune(character).toString())
+            origList.append(Rune(character).toString())
         }
         var revList = ArrayList<String>()
         for (character in join(rev, "\n")) {
-            revList.add(Rune(character).toString())
+            revList.append(Rune(character).toString())
         }
         var inlineDeltas: ArrayList<Delta<String>> = DiffUtils.diff(origList, revList).getDeltas()
         if (inlineDeltas.size < 3) {
@@ -236,8 +236,8 @@ public class DiffRowGenerator {
         tagBuilder.append(">")
         var endTag = tagBuilder.toString()
 
-        result.add(startTag, at: startPosition)
-        result.add(endTag, at: endPosition)
+        result.insert(startPosition, startTag)
+        result.insert(endPosition, endTag)
         return result
     }
 

@@ -86,7 +86,7 @@ public class MyersDiff<T> <: DiffAlgorithm<T> where T <: Equal<T> & ToString{
         let MAX: Int64 = N + M + 1
         let size = 1 + 2 * MAX
         let middle = size / 2
-        let diagonal: Array<PathNode> = Array<PathNode>(size,repeat: Snake(0, 0, Option<PathNode>.None))
+        let diagonal: Array<PathNode> = Array<PathNode>(size,item: Snake(0, 0, Option<PathNode>.None))
 
         diagonal[middle + 1] =  Snake(0, -1, Option<PathNode>.None)
         var d: Int64 = 0

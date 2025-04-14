@@ -46,7 +46,7 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString{
         var lines: ArrayList<T> = this.getRevised().getLines()
         var i: Int64 = 0
         while (i < lines.size) {
-            target.add(lines.get(i).getOrThrow(), at: position + i)
+            target.insert(position + i, lines.get(i).getOrThrow())
             i++
         }
     }
@@ -65,7 +65,7 @@ public class InsertDelta<T> <: Delta<T> where T <: Equal<T> & ToString{
         var i: Int64 = 0
         try {
             while (i < size) {
-                target.remove(at: position)
+                target.remove(position)
                 i++
             }
         } catch(e: IndexOutOfBoundsException) {
