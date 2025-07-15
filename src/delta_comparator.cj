@@ -8,7 +8,6 @@ package diffUtils4cj
  * Delta Comparator.
  */
 public class DeltaComparator<T> where T <: Equal<T> & ToString {
-    public static let  INSTANCE = DeltaComparator<T>()
 
     public init() {
     }
@@ -20,7 +19,7 @@ public class DeltaComparator<T> where T <: Equal<T> & ToString {
      *
      * @since 0.38.2
      */
-    public func deltaComparator(a:Delta<T>,b:Delta<T>): Ordering  {
+    public static func deltaComparator(a:Delta<T>,b:Delta<T>): Ordering  {
         let posA = a.getOriginal().getPosition();
         let posB = b.getOriginal().getPosition();
         if (posA > posB) {
