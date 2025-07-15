@@ -11,22 +11,21 @@ main(): Int64 {
     var original2: Chunk<String> = Chunk<String>(1, ["test"])
     var delta2 = InsertDelta<String>(original2, revised)
     var newRevised: Chunk<String> = Chunk<String>(5, ["new", "revised"])
-    var cmp = DeltaComparator<String>()
-    if (cmp.deltaComparator(delta,delta2) != Ordering.GT) {
+    if (DeltaComparator<String>.deltaComparator(delta,delta2) != Ordering.GT) {
         println("err1")
-        println(cmp.deltaComparator(delta,delta2))
+        println(DeltaComparator<String>.deltaComparator(delta,delta2))
         return 1
     }
     delta2.setOriginal(revised)
-    if (cmp.deltaComparator(delta,delta2) != Ordering.LT) {
+    if (DeltaComparator<String>.deltaComparator(delta,delta2) != Ordering.LT) {
         println("err2")
-        println(cmp.deltaComparator(delta,delta2))
+        println(DeltaComparator<String>.deltaComparator(delta,delta2))
         return 1
     }
     delta2.setOriginal(original)
-    if (cmp.deltaComparator(delta,delta2) != Ordering.EQ) {
+    if (DeltaComparator<String>.deltaComparator(delta,delta2) != Ordering.EQ) {
         println("err3")
-        println(cmp.deltaComparator(delta,delta2))
+        println(DeltaComparator<String>.deltaComparator(delta,delta2))
         return 1
     }
     return 0

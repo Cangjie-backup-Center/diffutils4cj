@@ -5,6 +5,7 @@
 package diffUtils4cj
 
 import std.collection.*
+import std.sort.*
 
 /**
  * Describes the patch holding all deltas between the original and revised texts.
@@ -31,7 +32,7 @@ public class Patch<T> where T <: Equal<T> & ToString {
      * @since 0.38.2
      */
     public func getDeltas(): ArrayList<Delta<T>> {
-        deltas.sortBy(stable: false, comparator: DeltaComparator<T>.INSTANCE.deltaComparator)
+        sort(deltas, by: DeltaComparator<T>.deltaComparator, descending: false)
         return deltas
     }
 

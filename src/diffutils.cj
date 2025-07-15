@@ -109,20 +109,20 @@ public class DiffUtils {
             if (inPrelude) {
                 if (line.startsWith("+++")) { inPrelude = false }
                 continue
-            }            
-            var m = unifiedDiffChunkRe.matcher(line).find()
+            }
+            var m = unifiedDiffChunkRe.find(line, group: true)
 
             if (let Some(v) <- m) {
                 // Process the lines in the previous chunk
                 if (rawChunk.size != 0) { extracted(rawChunk, patch, old_ln, new_ln) }
                 //Parse the @@ header
                 try {
-                    old_ln =Int64.parse(v.matchStr(1))
+                    old_ln =Int64.parse(v.matchString(1))
                 } catch (e: Exception) {
                     old_ln = 1
                 }
                 try {
-                    new_ln =Int64.parse(v.matchStr(3))
+                    new_ln =Int64.parse(v.matchString(3))
                 } catch (e: Exception) {
                     new_ln = 1
                 }
