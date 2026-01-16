@@ -74,7 +74,7 @@ public abstract class Delta<T> where T <: Equal<T> & ToString {
      *
      * @since 0.38.2
      */
-    public func setRevised(revised: Chunk<T>) {
+    public func setRevised(revised: Chunk<T>): Unit {
         this.revised = revised
     }
 
