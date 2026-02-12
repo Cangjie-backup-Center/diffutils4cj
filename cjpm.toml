@@ -6,10 +6,11 @@
   description = "比对两个字符串的差异，并按行将差异展示出来"
   link-option = ""
   name = "diffUtils4cj"
+  organization = "cangjie_tpc"
   output-type = "dynamic"
   src-dir = ["src","CHANGELOG.md"]
   target-dir = ""
-  version = "1.0.1"
+  version = "1.0.2"
   repository = "https://gitcode.com/Cangjie-TPC/diffutils4cj"
   homepage = "https://gitcode.com/Cangjie-TPC/diffutils4cj"
   documentation = "https://gitcode.com/Cangjie-TPC/diffutils4cj/blob/develop/doc/feature_api.md"

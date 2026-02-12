@@ -2,7 +2,7 @@
  * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
  */
 
-package diffUtils4cj
+package cangjie_tpc::diffUtils4cj
 
 /**
  * A diffnode in a diffpath.
