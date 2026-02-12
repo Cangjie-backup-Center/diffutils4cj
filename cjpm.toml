@@ -1,7 +1,7 @@
 [dependencies]
 
 [package]
-  cjc-version = "1.0.0"
+  cjc-version = "1.1.0"
   compile-option = "-O2"
   description = "nothing here"
   link-option = ""
@@ -9,7 +9,7 @@
   output-type = "dynamic"
   src-dir = "src"
   target-dir = ""
-  version = "1.0.1"
+  version = "1.0.2"
   package-configuration = {}
 
 [target]

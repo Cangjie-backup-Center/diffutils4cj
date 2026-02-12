@@ -257,7 +257,7 @@ public class Test_ReadMe03 {
 
 在下述版本验证通过：
 
-    Cangjie Version: 1.0.0
+    Cangjie Version: 1.1.0
 
 ## 开源协议
 
